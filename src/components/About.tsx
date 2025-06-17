@@ -1,79 +1,87 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 
 const skills = [
-  { name: "React", level: 90 },
-  { name: "TypeScript", level: 85 },
-  { name: "Node.js", level: 80 },
-  { name: "Next.js", level: 85 },
-  { name: "Tailwind CSS", level: 90 },
-  { name: "GraphQL", level: 75 },
+  "JavaScript",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Node.js",
+  "Tailwind CSS",
+  "MongoDB",
+  "PostgreSQL",
+  "Git",
+  "Docker",
 ];
 
-const SkillBar = ({ name, level }: { name: string; level: number }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  return (
-    <div className="mb-4">
-      <div className="flex justify-between mb-1">
-        <span className="font-medium">{name}</span>
-        <span className="text-gray-600 dark:text-gray-400">{level}%</span>
-      </div>
-      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-        <motion.div
-          ref={ref}
-          initial={{ width: 0 }}
-          animate={inView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="h-full bg-blue-600 rounded-full"
-        />
-      </div>
-    </div>
-  );
-};
-
 const About = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   return (
-    <section id="about" className="py-20">
+    <section id="about" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">About Me</h2>
-          
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-xl font-bold mb-4">My Journey</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                I'm a passionate full-stack developer with a keen eye for creating beautiful and functional web applications.
-                With several years of experience in the industry, I've worked on various projects ranging from small business
-                websites to large-scale enterprise applications.
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-black">About Me</h2>
+            <div className="w-20 h-1 bg-black mx-auto mb-6"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="aspect-square border-2 border-black bg-gray-50 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-gray-400">Profile Image</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-black">Full Stack Developer</h3>
+              <p className="text-gray-600 mb-6">
+                I'm a passionate developer with a keen eye for design and a love for creating
+                seamless user experiences. With expertise in both front-end and back-end
+                development, I bring ideas to life through clean, efficient code and
+                intuitive interfaces.
               </p>
-              <p className="text-gray-600 dark:text-gray-400">
-                My approach combines technical expertise with a strong focus on user experience and clean code.
-                I'm constantly learning and adapting to new technologies to deliver the best solutions for my clients.
+              <p className="text-gray-600 mb-8">
+                When I'm not coding, you can find me exploring new technologies,
+                contributing to open-source projects, or sharing my knowledge through
+                technical writing.
               </p>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-bold mb-4">Skills</h3>
-              {skills.map((skill) => (
-                <SkillBar key={skill.name} {...skill} />
-              ))}
-            </div>
+
+              <div>
+                <h4 className="text-lg font-semibold mb-4 text-black">Skills</h4>
+                <div className="flex flex-wrap gap-3">
+                  {skills.map((skill, index) => (
+                    <motion.span
+                      key={skill}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-all duration-300"
+                    >
+                      {skill}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
