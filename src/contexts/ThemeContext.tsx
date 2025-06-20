@@ -29,11 +29,38 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
+  // Function to apply theme to document
+  const applyTheme = (newTheme: Theme) => {
+    const root = document.documentElement;
+    
+    // Remove all theme classes first
+    root.classList.remove('light', 'dark');
+    
+    // Add the new theme class
+    root.classList.add(newTheme);
+    
+    // Set data attribute
+    root.setAttribute('data-theme', newTheme);
+    
+    // Set color-scheme
+    root.style.colorScheme = newTheme;
+    
+    // For debugging - log what we're applying
+    console.log('Applied theme:', newTheme);
+    console.log('HTML classes:', root.className);
+    console.log('Data theme:', root.getAttribute('data-theme'));
+  };
+
   useEffect(() => {
-    // Get theme from localStorage or system preference
-    const savedTheme = localStorage.getItem('theme') as Theme;
+    // Initial theme setup
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     const initialTheme = savedTheme || systemTheme;
+    
+    console.log('Initial theme setup:', { savedTheme, systemTheme, initialTheme });
+    
+    // Apply theme immediately
+    applyTheme(initialTheme);
     
     setTheme(initialTheme);
     setMounted(true);
@@ -41,21 +68,27 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (mounted) {
-      // Update document class and localStorage
-      document.documentElement.classList.remove('light', 'dark');
-      document.documentElement.classList.add(theme);
+      // Apply theme and save to localStorage
+      applyTheme(theme);
       localStorage.setItem('theme', theme);
     }
   }, [theme, mounted]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    console.log('Toggling theme from', theme, 'to', newTheme);
+    setTheme(newTheme);
+  };
+
+  const handleSetTheme = (newTheme: Theme) => {
+    console.log('Setting theme to', newTheme);
+    setTheme(newTheme);
   };
 
   const value = {
     theme,
     toggleTheme,
-    setTheme,
+    setTheme: handleSetTheme,
     mounted,
   };
 
@@ -64,4 +97,4 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       {children}
     </ThemeContext.Provider>
   );
-}; 
+};

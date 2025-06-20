@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const projects = [
   {
-    title: "Project One",
+    title: "Fortoon",
     description: "A full-stack web application built with Next.js and TypeScript.",
     image: "/project1.jpg",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],

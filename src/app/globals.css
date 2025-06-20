@@ -1,21 +1,62 @@
 @import "tailwindcss";
 
-:root {
+/* Tailwind v4 theme configuration */
+@theme {
+  --color-scheme: light dark;
+}
+
+/* Force explicit theme variables - this is crucial */
+:root,
+:root.light {
+  color-scheme: light;
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
 }
 
+:root.dark {
+  color-scheme: dark;
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 17, 24, 39;
+}
+
+/* Prevent any system preference override when theme is explicitly set */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light):not(.dark) {
+    color-scheme: dark;
     --foreground-rgb: 255, 255, 255;
     --background-rgb: 17, 24, 39;
   }
 }
 
+/* Ensure body respects the theme */
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
 }
+
+/* Force Tailwind classes to work correctly */
+.light {
+  color-scheme: light !important;
+}
+
+.dark {
+  color-scheme: dark !important;
+}
+
+/* Explicit overrides for common Tailwind classes */
+.light .bg-white { background-color: #ffffff !important; }
+.light .bg-gray-50 { background-color: #f9fafb !important; }
+.light .bg-gray-100 { background-color: #f3f4f6 !important; }
+.light .text-black { color: #000000 !important; }
+.light .text-gray-900 { color: #111827 !important; }
+.light .text-gray-600 { color: #4b5563 !important; }
+
+.dark .bg-gray-900 { background-color: #111827 !important; }
+.dark .bg-gray-800 { background-color: #1f2937 !important; }
+.dark .bg-gray-700 { background-color: #374151 !important; }
+.dark .text-white { color: #ffffff !important; }
+.dark .text-gray-100 { color: #f3f4f6 !important; }
+.dark .text-gray-400 { color: #9ca3af !important; }
 
 /* Custom animations */
 @keyframes float {
@@ -37,15 +78,20 @@ body {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  background-color: white;
 }
 
-/* Custom scrollbar */
+html.dark {
+  background-color: #111827;
+}
+
+/* Custom scrollbar - Light theme */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(var(--background-rgb));
+  background: #f3f4f6;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -83,7 +129,6 @@ html {
 /* Selection styles */
 ::selection {
   background: rgba(59, 130, 246, 0.3);
-  color: rgb(var(--foreground-rgb));
 }
 
 .dark ::selection {
@@ -106,34 +151,62 @@ html {
     animation-delay: 4s;
   }
   
-  /* Theme-aware text colors */
+  /* Force theme-aware text colors */
   .text-theme-primary {
-    @apply text-black dark:text-white;
+    color: #000000;
+  }
+  .dark .text-theme-primary {
+    color: #ffffff;
   }
   
   .text-theme-secondary {
-    @apply text-gray-600 dark:text-gray-400;
+    color: #4b5563;
+  }
+  .dark .text-theme-secondary {
+    color: #9ca3af;
   }
   
   .text-theme-muted {
-    @apply text-gray-500 dark:text-gray-500;
+    color: #6b7280;
+  }
+  .dark .text-theme-muted {
+    color: #6b7280;
   }
   
-  /* Theme-aware background colors */
+  /* Force theme-aware background colors */
   .bg-theme-primary {
-    @apply bg-white dark:bg-gray-900;
+    background-color: #ffffff;
+  }
+  .dark .bg-theme-primary {
+    background-color: #111827;
   }
   
   .bg-theme-secondary {
-    @apply bg-gray-50 dark:bg-gray-800;
+    background-color: #f9fafb;
+  }
+  .dark .bg-theme-secondary {
+    background-color: #1f2937;
   }
   
-  /* Theme-aware border colors */
+  .bg-theme-card {
+    background-color: #ffffff;
+  }
+  .dark .bg-theme-card {
+    background-color: #1f2937;
+  }
+  
+  /* Force theme-aware border colors */
   .border-theme-primary {
-    @apply border-black dark:border-white;
+    border-color: #000000;
+  }
+  .dark .border-theme-primary {
+    border-color: #ffffff;
   }
   
   .border-theme-secondary {
-    @apply border-gray-200 dark:border-gray-700;
+    border-color: #e5e7eb;
+  }
+  .dark .border-theme-secondary {
+    border-color: #374151;
   }
 }

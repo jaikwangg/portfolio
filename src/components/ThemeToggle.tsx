@@ -8,10 +8,10 @@ const ThemeToggle = () => {
 
   if (!mounted) {
     return (
-      <div className="relative w-12 h-6 rounded-full bg-gray-200 p-1">
-        <div className="w-4 h-4 rounded-full bg-white shadow-md"></div>
-      </div>
-    );
+        <div className="relative w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-700 p-1">
+          <div className="w-4 h-4 rounded-full bg-white shadow-md"></div>
+        </div>
+      );
   }
 
   return (

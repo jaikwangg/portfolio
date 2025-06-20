@@ -1,4 +1,4 @@
-// import { motion } from "framer-motion";
+//import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
@@ -7,6 +7,7 @@ import Navigation from "@/components/Navigation";
 
 export default function Home() {
   return (
+    
     <main>
       <Navigation />
       <div id="home">
