@@ -86,7 +86,7 @@ const Hero = () => {
           >
             {/* GitHub */}
             <motion.a
-              href="https://github.com/yourusername"
+              href="https://github.com/jaikwangg"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -2 }}
@@ -105,7 +105,7 @@ const Hero = () => {
 
             {/* Instagram */}
             <motion.a
-              href="https://instagram.com/yourusername"
+              href="https://instagram.com/worajai_"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -2 }}
