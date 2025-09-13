@@ -58,6 +58,49 @@ body {
 .dark .text-gray-100 { color: #f3f4f6 !important; }
 .dark .text-gray-400 { color: #9ca3af !important; }
 
+/* Blue Ocean Theme */
+:root.blue-ocean {
+  color-scheme: dark; /* Or light, depending on the desired base */
+  --foreground-rgb: 230, 240, 255;
+  --background-rgb: 10, 25, 47;
+}
+
+.blue-ocean {
+  color-scheme: dark !important; /* Or light */
+}
+
+.blue-ocean .bg-gray-900 { background-color: #0A192F !important; } /* Dark Navy */
+.blue-ocean .bg-gray-800 { background-color: #173A5E !important; } /* Lighter Navy */
+.blue-ocean .bg-gray-700 { background-color: #3A506B !important; }
+.blue-ocean .text-white { color: #E6F0FF !important; } /* Light Blue Text */
+.blue-ocean .text-gray-100 { color: #C0D6F0 !important; }
+.blue-ocean .text-gray-400 { color: #8892B0 !important; } /* Slate Gray */
+
+.blue-ocean ::-webkit-scrollbar-track {
+  background: #0A192F;
+}
+
+.blue-ocean ::-webkit-scrollbar-thumb {
+  background: #173A5E;
+}
+
+.blue-ocean ::-webkit-scrollbar-thumb:hover {
+  background: #3A506B;
+}
+
+.blue-ocean *:focus {
+  box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.5); /* A minty green for focus */
+}
+
+.blue-ocean ::selection {
+  background: rgba(100, 255, 218, 0.3);
+}
+
+html.blue-ocean {
+  background-color: #0A192F;
+}
+
+
 /* Custom animations */
 @keyframes float {
   0% {
@@ -208,5 +251,31 @@ html.dark {
   }
   .dark .border-theme-secondary {
     border-color: #374151;
+  }
+
+  /* Blue Ocean Theme Utilities */
+  .blue-ocean .text-theme-primary {
+    color: #E6F0FF;
+  }
+  .blue-ocean .text-theme-secondary {
+    color: #8892B0;
+  }
+  .blue-ocean .text-theme-muted {
+    color: #8892B0;
+  }
+  .blue-ocean .bg-theme-primary {
+    background-color: #0A192F;
+  }
+  .blue-ocean .bg-theme-secondary {
+    background-color: #173A5E;
+  }
+  .blue-ocean .bg-theme-card {
+    background-color: #173A5E;
+  }
+  .blue-ocean .border-theme-primary {
+    border-color: #E6F0FF;
+  }
+  .blue-ocean .border-theme-secondary {
+    border-color: #173A5E;
   }
 }

@@ -148,4 +148,67 @@ For production deployment:
 - **Use OAuth2 if**: You want maximum security and don't mind the setup complexity
 - **Use App Password if**: You want a quick setup and are comfortable with the security trade-offs
 
-Both methods will work reliably for a portfolio contact form. The choice depends on your security requirements and setup preferences. 
+Both methods will work reliably for a portfolio contact form. The choice depends on your security requirements and setup preferences.
+
+## Option 3: Google Calendar API Setup (for Availability)
+
+This setup is required for the availability planner feature. It uses a service account to securely access your Google Calendar data without requiring you to grant broad permissions.
+
+### Step 1: Enable Google Calendar API
+
+1.  Make sure you have a Google Cloud project (you can use the same one as for the Gmail API).
+2.  In the Google Cloud Console, go to "APIs & Services" > "Enabled APIs & services".
+3.  Click "+ ENABLE APIS AND SERVICES".
+4.  Search for "Google Calendar API" and enable it.
+
+### Step 2: Create a Service Account
+
+1.  In the Google Cloud Console, go to "IAM & Admin" > "Service Accounts".
+2.  Click "+ CREATE SERVICE ACCOUNT".
+3.  Give the service account a name (e.g., "portfolio-calendar-reader") and a description.
+4.  Click "CREATE AND CONTINUE".
+5.  For roles, you can skip this for now. Click "CONTINUE".
+6.  Click "DONE".
+7.  Find the newly created service account in the list and click on it.
+8.  Go to the "Keys" tab.
+9.  Click "ADD KEY" > "Create new key".
+10. Choose "JSON" as the key type and click "CREATE".
+11. A JSON file will be downloaded to your computer. **Keep this file secure!**
+
+### Step 3: Share Your Calendar with the Service Account
+
+1.  Open the downloaded JSON file. You will find a `client_email` field. Copy this email address (it will look something like `...gserviceaccount.com`).
+2.  Go to your [Google Calendar settings](https://calendar.google.com/calendar/r/settings).
+3.  On the left, under "Settings for my calendars", select the calendar you want to use for your availability (usually your primary calendar).
+4.  Go to "Share with specific people or groups".
+5.  Click "+ Add people and groups".
+6.  Paste the service account's email address in the field.
+7.  For permissions, select "See all event details" or "See only free/busy (hide details)". "See only free/busy" is more privacy-preserving if you don't need the event details.
+8.  Click "Send".
+
+### Step 4: Set Environment Variables
+
+1.  Open the downloaded JSON file again.
+2.  Copy the `client_email` value.
+3.  Copy the `private_key` value. It's a long string starting with `-----BEGIN PRIVATE KEY-----`.
+4.  Get your Calendar ID. In your Google Calendar settings, under "Integrate calendar", you'll find your Calendar ID. For your primary calendar, it's usually your email address.
+5.  Add the following variables to your `.env.local` file:
+
+```env
+# Google Calendar API Configuration
+GOOGLE_CLIENT_EMAIL=your_service_account_client_email_here
+GOOGLE_PRIVATE_KEY=your_service_account_private_key_here
+GOOGLE_CALENDAR_ID=your_google_calendar_id_here
+
+# Optional: Configure your working hours (defaults to 9-5) and slot duration (defaults to 30 mins)
+# WORK_HOURS_START=9
+# WORK_HOURS_END=17
+# SLOT_DURATION=30
+```
+
+**Important:** When you add the `GOOGLE_PRIVATE_KEY` to your `.env.local` file, make sure to wrap it in double quotes to preserve the newlines, or format it as a single line with `\n` characters for the newlines. The provided API route in this project is configured to handle the `\n` characters.
+
+Example of formatting the private key in `.env.local`:
+`GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"`
+
+With these steps completed, the availability planner should now be able to fetch your calendar data and display your available time slots.

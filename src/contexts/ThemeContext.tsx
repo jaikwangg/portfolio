@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark' | 'blue-ocean';
 
 interface ThemeContextType {
   theme: Theme;
@@ -34,7 +34,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const root = document.documentElement;
     
     // Remove all theme classes first
-    root.classList.remove('light', 'dark');
+    root.classList.remove('light', 'dark', 'blue-ocean');
     
     // Add the new theme class
     root.classList.add(newTheme);
@@ -75,7 +75,14 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, [theme, mounted]);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    let newTheme: Theme;
+    if (theme === 'light') {
+      newTheme = 'dark';
+    } else if (theme === 'dark') {
+      newTheme = 'blue-ocean';
+    } else {
+      newTheme = 'light';
+    }
     console.log('Toggling theme from', theme, 'to', newTheme);
     setTheme(newTheme);
   };

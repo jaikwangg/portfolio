@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Availability from "./Availability";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,41 +21,42 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
 
-    // try {
-    //   // Choose API endpoint based on toggle
-    //   const endpoint = useOAuth2 ? '/api/send-email' : '/api/send-email-simple';
+    try {
+      // Choose API endpoint based on toggle
+      const endpoint = useOAuth2 ? '/api/send-email' : '/api/send-email-simple';
       
-    //   const response = await fetch(endpoint, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    //   const data = await response.json();
+      const data = await response.json();
 
-    //   if (response.ok) {
-    //     setSubmitStatus({
-    //       type: 'success',
-    //       message: 'Thank you! Your message has been sent successfully.'
-    //     });
-    //     // Reset form
-    //     setFormData({ name: "", email: "", message: "" });
-    //   } else {
-    //     setSubmitStatus({
-    //       type: 'error',
-    //       message: data.error || 'Failed to send message. Please try again.'
-    //     });
-    //   }
-    // } catch (error) {
-    //   setSubmitStatus({
-    //     type: 'error',
-    //     message: 'Network error. Please check your connection and try again.'
-    //   });
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you! Your message has been sent successfully.'
+        });
+        // Reset form
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: data.error || 'Failed to send message. Please try again.'
+        });
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: 'Network error. Please check your connection and try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -80,6 +82,10 @@ const Contact = () => {
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Have a project in mind or want to collaborate? Feel free to reach out!
             </p>
+          </div>
+
+          <div className="mb-12">
+            <Availability />
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
