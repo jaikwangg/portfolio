@@ -5,18 +5,28 @@
   --color-scheme: light dark;
 }
 
+/* Futuristic Color Palette */
+:root {
+  --gradient-start: #e0f2fe; /* Light blue */
+  --gradient-end: #e9d5ff; /* Pastel purple */
+  --neon-pink: #ec4899;
+  --neon-purple: #a855f7;
+  --accent-pink: #f472b6;
+  --accent-purple: #c084fc;
+}
+
 /* Force explicit theme variables - this is crucial */
 :root,
 :root.light {
   color-scheme: light;
-  --foreground-rgb: 0, 0, 0;
+  --foreground-rgb: 15, 23, 42;
   --background-rgb: 255, 255, 255;
 }
 
 :root.dark {
   color-scheme: dark;
-  --foreground-rgb: 255, 255, 255;
-  --background-rgb: 17, 24, 39;
+  --foreground-rgb: 248, 250, 252;
+  --background-rgb: 15, 23, 42;
 }
 
 /* Prevent any system preference override when theme is explicitly set */
@@ -31,7 +41,12 @@
 /* Ensure body respects the theme */
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  min-height: 100vh;
+}
+
+.dark body {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
 }
 
 /* Force Tailwind classes to work correctly */
@@ -78,11 +93,11 @@ body {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
-  background-color: white;
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
 }
 
 html.dark {
-  background-color: #111827;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
 }
 
 /* Custom scrollbar - Light theme */
@@ -142,6 +157,85 @@ html.dark {
   transition-duration: 300ms;
 }
 
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(236, 72, 153, 0.1);
+}
+
+.dark .glass-card {
+  background: rgba(30, 27, 75, 0.4);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.2);
+}
+
+/* Neon glow effects */
+.neon-pink {
+  text-shadow: 0 0 10px rgba(236, 72, 153, 0.5),
+               0 0 20px rgba(236, 72, 153, 0.3),
+               0 0 30px rgba(236, 72, 153, 0.2);
+}
+
+.neon-purple {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5),
+               0 0 20px rgba(168, 85, 247, 0.3),
+               0 0 30px rgba(168, 85, 247, 0.2);
+}
+
+.glow-pink {
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.4),
+              0 0 40px rgba(236, 72, 153, 0.2);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4),
+              0 0 40px rgba(168, 85, 247, 0.2);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
 /* Custom utility classes */
 @layer utilities {
   .animation-delay-2000 {
@@ -151,62 +245,79 @@ html.dark {
     animation-delay: 4s;
   }
   
+  /* Futuristic text colors */
+  .text-neon-pink {
+    color: var(--neon-pink);
+  }
+  
+  .text-neon-purple {
+    color: var(--neon-purple);
+  }
+  
+  .text-accent-pink {
+    color: var(--accent-pink);
+  }
+  
+  .text-accent-purple {
+    color: var(--accent-purple);
+  }
+  
   /* Force theme-aware text colors */
   .text-theme-primary {
-    color: #000000;
+    color: rgb(15, 23, 42);
   }
   .dark .text-theme-primary {
-    color: #ffffff;
+    color: rgb(248, 250, 252);
   }
   
   .text-theme-secondary {
-    color: #4b5563;
+    color: #475569;
   }
   .dark .text-theme-secondary {
-    color: #9ca3af;
+    color: #cbd5e1;
   }
   
   .text-theme-muted {
-    color: #6b7280;
+    color: #64748b;
   }
   .dark .text-theme-muted {
-    color: #6b7280;
+    color: #94a3b8;
   }
   
   /* Force theme-aware background colors */
   .bg-theme-primary {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
   }
   .dark .bg-theme-primary {
-    background-color: #111827;
+    background-color: rgba(15, 23, 42, 0.3);
   }
   
   .bg-theme-secondary {
-    background-color: #f9fafb;
+    background-color: rgba(255, 255, 255, 0.05);
   }
   .dark .bg-theme-secondary {
-    background-color: #1f2937;
+    background-color: rgba(30, 27, 75, 0.2);
   }
   
   .bg-theme-card {
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
   }
   .dark .bg-theme-card {
-    background-color: #1f2937;
+    background: rgba(30, 27, 75, 0.4);
   }
   
   /* Force theme-aware border colors */
   .border-theme-primary {
-    border-color: #000000;
+    border-color: rgba(255, 255, 255, 0.3);
   }
   .dark .border-theme-primary {
-    border-color: #ffffff;
+    border-color: rgba(168, 85, 247, 0.3);
   }
   
   .border-theme-secondary {
-    border-color: #e5e7eb;
+    border-color: rgba(255, 255, 255, 0.2);
   }
   .dark .border-theme-secondary {
-    border-color: #374151;
+    border-color: rgba(168, 85, 247, 0.2);
   }
 }

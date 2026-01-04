@@ -65,19 +65,20 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="py-24 px-4 relative">
+      <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
         >
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-black dark:text-white">Get In Touch</h2>
-            <div className="w-20 h-1 bg-black dark:bg-white mx-auto mb-6"></div>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Get In Touch
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-6 rounded-full" />
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               Have a project in mind or want to collaborate? Feel free to reach out!
             </p>
           </div>
@@ -89,12 +90,15 @@ const Contact = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-2xl font-bold mb-6 text-black dark:text-white">Contact Information</h3>
+              <h3 className="text-3xl font-bold mb-8 text-slate-800 dark:text-slate-100">Contact Information</h3>
               <div className="space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 border-2 border-black dark:border-white flex items-center justify-center">
+                <motion.div
+                  whileHover={{ x: 5 }}
+                  className="flex items-center space-x-4 glass-card p-4 rounded-2xl"
+                >
+                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-pink-500/20 to-purple-500/20">
                     <svg
-                      className="w-6 h-6 text-black dark:text-white"
+                      className="w-7 h-7 text-pink-500 dark:text-pink-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -108,15 +112,18 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black dark:text-white">Email</h4>
-                    <p className="text-gray-600 dark:text-gray-400">Worakij.Wanwong@gmail.com</p>
+                    <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Email</h4>
+                    <p className="text-slate-600 dark:text-slate-400">Worakij.Wanwong@gmail.com</p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 border-2 border-black dark:border-white flex items-center justify-center">
+                <motion.div
+                  whileHover={{ x: 5 }}
+                  className="flex items-center space-x-4 glass-card p-4 rounded-2xl"
+                >
+                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500/20 to-pink-500/20">
                     <svg
-                      className="w-6 h-6 text-black dark:text-white"
+                      className="w-7 h-7 text-purple-500 dark:text-purple-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -136,14 +143,14 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black dark:text-white">Location</h4>
-                    <p className="text-gray-600 dark:text-gray-400">Ladkrabang ,Bangkok ,Thailand</p>
+                    <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Location</h4>
+                    <p className="text-slate-600 dark:text-slate-400">Ladkrabang, Bangkok, Thailand</p>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Social Media Links */}
-                <div className="pt-4">
-                  <h4 className="font-semibold text-black dark:text-white mb-4">Follow Me</h4>
+                <div className="pt-6">
+                  <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-4 text-lg">Follow Me</h4>
                   <div className="flex space-x-4">
                     {/* GitHub */}
                     <motion.a
@@ -152,11 +159,11 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-10 h-10 border-2 border-black dark:border-white rounded-full flex items-center justify-center hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-pink-500 dark:hover:text-pink-400 transition-all duration-300"
                       aria-label="GitHub"
                     >
                       <svg
-                        className="w-5 h-5"
+                        className="w-6 h-6"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -171,11 +178,11 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-10 h-10 border-2 border-black dark:border-white rounded-full flex items-center justify-center hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-purple-500 dark:hover:text-purple-400 transition-all duration-300"
                       aria-label="Instagram"
                     >
                       <svg
-                        className="w-5 h-5"
+                        className="w-6 h-6"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -225,7 +232,8 @@ const Contact = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="glass-card rounded-3xl p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Status Message */}
                 {submitStatus.type && (
                   <motion.div
@@ -242,7 +250,7 @@ const Contact = () => {
                 )}
 
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-black dark:text-white mb-2">
+                  <label htmlFor="name" className="block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
                     Name
                   </label>
                   <input
@@ -252,13 +260,14 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 glass-card rounded-xl border border-purple-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    placeholder="Your name"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-black dark:text-white mb-2">
+                  <label htmlFor="email" className="block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
                     Email
                   </label>
                   <input
@@ -268,13 +277,14 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 glass-card rounded-xl border border-purple-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    placeholder="your.email@example.com"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-black dark:text-white mb-2">
+                  <label htmlFor="message" className="block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
                     Message
                   </label>
                   <textarea
@@ -284,28 +294,30 @@ const Contact = () => {
                     onChange={handleChange}
                     disabled={isSubmitting}
                     rows={4}
-                    className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 glass-card rounded-xl border border-purple-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all resize-none"
+                    placeholder="Tell me about your project..."
                     required
                   />
                 </div>
 
                 <motion.button
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02, y: -2 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full border-2 border-black dark:border-white bg-black dark:bg-white text-white dark:text-black px-8 py-4 hover:bg-white dark:hover:bg-gray-900 hover:text-black dark:hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black dark:disabled:hover:bg-white disabled:hover:text-white dark:disabled:hover:text-black"
+                  className="w-full glass-card rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 font-semibold hover:from-pink-600 hover:to-purple-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl glow-pink"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center justify-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-white dark:border-black border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                       <span>Sending...</span>
                     </div>
                   ) : (
                     'Send Message'
                   )}
                 </motion.button>
-              </form>
+                </form>
+              </div>
             </motion.div>
           </div>
         </motion.div>

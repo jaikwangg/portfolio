@@ -55,12 +55,10 @@ const Navigation = () => {
     <motion.nav
       style={{
         height: headerHeight,
-        backgroundColor: `rgba(255, 255, 255, ${headerOpacity.get()})`,
-        backdropFilter: `blur(${headerBlur.get()}px)`,
       }}
-      className={`fixed top-4 left-4 right-4 z-50 rounded-2xl border border-white/20 dark:border-gray-700/20 transition-all duration-300 ${
-        isScrolled ? "shadow-lg dark:shadow-gray-900/20" : "shadow-md dark:shadow-gray-900/10"
-      } dark:bg-gray-800/80`}
+      className={`fixed top-4 left-4 right-4 z-50 glass rounded-2xl transition-all duration-300 ${
+        isScrolled ? "shadow-xl glow-purple" : "shadow-lg"
+      }`}
     >
       <div className="container mx-auto px-6 h-full">
         <div className="flex items-center justify-between h-full">
@@ -68,9 +66,9 @@ const Navigation = () => {
             href="/" 
             className="text-xl font-bold relative group"
           >
-            <span className="relative z-10 text-black dark:text-white">JK</span>
+            <span className="relative z-10 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">JK</span>
             <motion.span
-              className="absolute inset-0 bg-black/5 dark:bg-white/5 rounded-lg -z-10"
+              className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-lg -z-10 blur-sm"
               initial={false}
               animate={{ scale: isScrolled ? 1 : 1.1 }}
               transition={{ duration: 0.3 }}
@@ -83,21 +81,21 @@ const Navigation = () => {
               <Link
                 key={item.path}
                 href={item.path}
-                className={`relative group px-3 py-2 rounded-lg transition-all duration-300 ${
+                className={`relative group px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
                   pathname === item.path 
-                    ? "text-black dark:text-white" 
-                    : "text-black dark:text-gray-900 hover:text-black dark:hover:text-black"
+                    ? "text-purple-600 dark:text-purple-400" 
+                    : "text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400"
                 }`}
               >
                 {item.name}
                 {pathname === item.path && (
                   <motion.div
                     layoutId="underline"
-                    className="absolute inset-0 bg-black/5 dark:bg-white/5 rounded-lg -z-10"
+                    className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-lg -z-10"
                   />
                 )}
                 <motion.span
-                  className="absolute inset-0 bg-black/5 dark:bg-white/5 rounded-lg -z-10 scale-0 group-hover:scale-100 transition-transform duration-300"
+                  className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10 rounded-lg -z-10 scale-0 group-hover:scale-100 transition-transform duration-300"
                   initial={false}
                 />
               </Link>
@@ -116,10 +114,10 @@ const Navigation = () => {
             
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300"
+              className="p-2 rounded-lg glass-card hover:bg-purple-500/10 transition-colors duration-300"
             >
               <svg
-                className="w-6 h-6 text-black dark:text-white"
+                className="w-6 h-6 text-slate-700 dark:text-slate-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -139,14 +137,14 @@ const Navigation = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="absolute top-full left-0 right-0 mt-2 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/20 shadow-lg"
+                className="absolute top-full left-0 right-0 mt-2 glass-card rounded-2xl shadow-xl"
               >
                 <div className="container mx-auto px-6 py-4">
                   {navItems.map((item) => (
                     <button
                       key={item.id}
                       onClick={() => handleMobileNavClick(item.id)}
-                      className="block w-full text-left py-3 px-4 rounded-lg text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300"
+                      className="block w-full text-left py-3 px-4 rounded-lg text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-300"
                     >
                       {item.name}
                     </button>

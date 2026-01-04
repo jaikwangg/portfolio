@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from 'next/image';
 
 interface Project {
   title: string;
@@ -67,11 +66,13 @@ const Section = ({ title, description, projects }: SectionProps) => (
     viewport={{ once: true }}
     className="mb-16"
   >
-    <h2 className="text-4xl font-extrabold mb-4 text-black dark:text-white text-center">{title}</h2>
-    <div className="w-20 h-1 bg-black dark:bg-white mx-auto mb-6" />
-    <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-center mb-10">{description}</p>
+    <h2 className="text-5xl font-extrabold mb-4 text-center bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+      {title}
+    </h2>
+    <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-6 rounded-full" />
+    <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-center mb-12 text-lg">{description}</p>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {projects.map((project, index) => (
         <motion.div
           key={index}
@@ -79,27 +80,29 @@ const Section = ({ title, description, projects }: SectionProps) => (
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
           viewport={{ once: true }}
-          className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden transition hover:scale-[1.01]"
+          whileHover={{ y: -8, scale: 1.02 }}
+          className="glass-card rounded-3xl overflow-hidden group cursor-pointer transition-all duration-300"
         >
-          <div className="aspect-video bg-gray-100 dark:bg-gray-700 relative">
-          <Image
-  src={project.image}
-  alt={project.title}
-  layout="fill"
-  objectFit="cover"
-/>
-
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-all duration-300" />
+          <div className="aspect-video bg-gradient-to-br from-pink-200/50 to-purple-200/50 dark:from-pink-900/30 dark:to-purple-900/30 relative overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-4xl opacity-50">🚀</span>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <span className="text-white font-semibold">View Details →</span>
+            </div>
           </div>
 
           <div className="p-6">
-            <h3 className="text-2xl font-semibold mb-2 text-black dark:text-white">{project.title}</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+            <h3 className="text-2xl font-bold mb-3 text-slate-800 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              {project.title}
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">{project.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {project.tags.map((tag, tagIndex) => (
                 <span
                   key={tagIndex}
-                  className="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                  className="px-3 py-1.5 text-xs font-semibold rounded-full glass-card text-purple-600 dark:text-purple-400 border border-purple-500/30"
                 >
                   {tag}
                 </span>
@@ -107,9 +110,17 @@ const Section = ({ title, description, projects }: SectionProps) => (
             </div>
             <a
               href={project.link}
-              className="inline-block mt-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-purple-600 dark:text-purple-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors group/link"
             >
-              View Project →
+              View Project
+              <motion.span
+                className="inline-block"
+                initial={{ x: 0 }}
+                whileHover={{ x: 4 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                →
+              </motion.span>
             </a>
           </div>
         </motion.div>
@@ -120,8 +131,8 @@ const Section = ({ title, description, projects }: SectionProps) => (
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-24 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto max-w-7xl">
+    <section id="projects" className="py-24 px-4 relative">
+      <div className="container mx-auto max-w-7xl relative z-10">
         <Section
           title="My Projects"
           description="Here are some of my recent works. Each project is a unique piece of development."
