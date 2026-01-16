@@ -23,17 +23,17 @@ const Hero = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-left"
+            className="text-left "
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-6"
+              className="mb-10"
             >
-              <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-semibold text-blue-600 dark:text-blue-400 mb-4">
+              {/* <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-semibold text-blue-600 dark:text-blue-400 mb-4">
                 👋 Welcome to my portfolio
-              </span>
+              </span> */}
             </motion.div>
 
             <motion.h1
@@ -57,16 +57,6 @@ const Hero = () => {
             >
               Full Stack Developer & <span className="text-blue-600 dark:text-blue-400 font-semibold">UX/UI Designer</span>
             </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-slate-600 dark:text-slate-400 mb-12 text-lg leading-relaxed"
-            >
-              Crafting digital experiences with modern technologies and creative solutions. 
-              Building the future, one line of code at a time.
-            </motion.p>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
