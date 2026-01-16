@@ -6,12 +6,12 @@ const Hero = () => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-sky-100 to-blue-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-slate-900" />
       
       {/* Floating orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 dark:bg-purple-500/30 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-xl opacity-70 animate-float" />
-      <div className="absolute top-40 right-10 w-72 h-72 bg-pink-300 dark:bg-pink-500/30 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-xl opacity-70 animate-float-slow animation-delay-2000" />
-      <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-blue-300 dark:bg-blue-500/30 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-xl opacity-70 animate-float animation-delay-4000" />
+      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300 dark:bg-blue-500/30 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-xl opacity-70 animate-float" />
+      <div className="absolute top-40 right-10 w-72 h-72 bg-sky-300 dark:bg-sky-500/30 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-xl opacity-70 animate-float-slow animation-delay-2000" />
+      <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-blue-400 dark:bg-blue-600/30 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-xl opacity-70 animate-float animation-delay-4000" />
       
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(236,72,153,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(236,72,153,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
@@ -31,7 +31,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-6"
             >
-              <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-semibold text-purple-600 dark:text-purple-400 mb-4">
+              <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-semibold text-blue-600 dark:text-blue-400 mb-4">
                 👋 Welcome to my portfolio
               </span>
             </motion.div>
@@ -42,9 +42,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight"
             >
-              <span className="text-slate-800 dark:text-slate-100">Hi, I'm</span>
+              <span className="text-slate-800 dark:text-slate-100">Hi, I am</span>
               <br />
-              <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
+              <span className="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent animate-pulse">
                 Jaikwang
               </span>
             </motion.h1>
@@ -55,7 +55,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-2xl md:text-3xl text-slate-600 dark:text-slate-300 mb-8 font-light"
             >
-              Full Stack Developer & <span className="text-purple-600 dark:text-purple-400 font-semibold">UI/UX Designer</span>
+              Full Stack Developer & <span className="text-blue-600 dark:text-blue-400 font-semibold">UX/UI Designer</span>
             </motion.h2>
             
             <motion.p
@@ -78,7 +78,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 href="#projects"
-                className="glass-card px-8 py-4 rounded-2xl font-semibold text-white bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl glow-pink"
+                className="glass-card px-8 py-4 rounded-2xl font-semibold text-white bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 transition-all duration-300 shadow-lg hover:shadow-xl glow-blue"
               >
                 View My Work
               </motion.a>
@@ -86,7 +86,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 href="#contact"
-                className="glass-card px-8 py-4 rounded-2xl font-semibold text-purple-600 dark:text-purple-400 border-2 border-purple-500/50 dark:border-purple-400/50 hover:bg-purple-500/10 transition-all duration-300"
+                className="glass-card px-8 py-4 rounded-2xl font-semibold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50 dark:border-blue-400/50 hover:bg-blue-500/10 transition-all duration-300"
               >
                 Contact Me
               </motion.a>
@@ -106,7 +106,7 @@ const Hero = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 glass-card rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-pink-500 dark:hover:text-pink-400 transition-all duration-300"
+                className="w-12 h-12 glass-card rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300"
                 aria-label="GitHub"
               >
                 <svg
@@ -125,7 +125,7 @@ const Hero = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 glass-card rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-purple-500 dark:hover:text-purple-400 transition-all duration-300"
+                className="w-12 h-12 glass-card rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300"
                 aria-label="Instagram"
               >
                 <svg
@@ -148,16 +148,16 @@ const Hero = () => {
           >
             <div className="relative w-full max-w-md mx-auto">
               {/* Glowing background circle */}
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-sky-400/20 rounded-full blur-3xl animate-pulse" />
               
               {/* Portrait container */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative glass-card rounded-3xl p-8 backdrop-blur-xl"
               >
-                <div className="aspect-square rounded-2xl bg-gradient-to-br from-pink-200 to-purple-200 dark:from-pink-900/30 dark:to-purple-900/30 flex items-center justify-center overflow-hidden">
+                <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-200 to-sky-200 dark:from-blue-900/30 dark:to-sky-900/30 flex items-center justify-center overflow-hidden">
                   <div className="text-center">
-                    <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center text-4xl font-bold text-white">
+                    <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-400 to-sky-400 flex items-center justify-center text-4xl font-bold text-white">
                       JK
                     </div>
                     <p className="text-slate-600 dark:text-slate-400 text-sm">Professional Portrait</p>
@@ -194,12 +194,12 @@ const Hero = () => {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 glass-card rounded-full flex justify-center border border-purple-500/30"
+            className="w-6 h-10 glass-card rounded-full flex justify-center border border-blue-500/30"
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-3 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full mt-2"
+              className="w-1.5 h-3 bg-gradient-to-b from-blue-500 to-sky-500 rounded-full mt-2"
             />
           </motion.div>
         </motion.div>

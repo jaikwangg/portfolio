@@ -33,10 +33,10 @@ const About = () => {
           viewport={{ once: true }}
         >
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent">
               About Me
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-6 rounded-full" />
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-sky-500 mx-auto mb-6 rounded-full" />
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
@@ -49,12 +49,12 @@ const About = () => {
             >
               <div className="relative">
                 {/* Glowing background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-pink-400/30 to-purple-400/30 rounded-3xl blur-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-sky-400/30 rounded-3xl blur-2xl" />
                 
                 {/* Portrait container */}
                 <div className="relative glass-card rounded-3xl p-8 aspect-square flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center text-5xl font-bold text-white shadow-xl glow-pink">
+                    <div className="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-400 to-sky-400 flex items-center justify-center text-5xl font-bold text-white shadow-xl glow-blue">
                       JK
                     </div>
                     <p className="text-slate-600 dark:text-slate-400">Professional Portrait</p>
@@ -73,13 +73,13 @@ const About = () => {
                 Full Stack Developer
               </h3>
               <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-lg">
-                I'm a passionate developer with a keen eye for design and a love for creating
+                I am a passionate developer with a keen eye for design and a love for creating
                 seamless user experiences. With expertise in both front-end and back-end
                 development, I bring ideas to life through clean, efficient code and
                 intuitive interfaces.
               </p>
               <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed text-lg">
-                When I'm not coding, you can find me exploring new technologies,
+                When I am not coding, you can find me exploring new technologies,
                 contributing to open-source projects, or sharing my knowledge through
                 technical writing.
               </p>
@@ -108,7 +108,7 @@ const About = () => {
                   whileHover={{ y: -5 }}
                   className="glass-card rounded-2xl p-6 relative overflow-hidden group"
                 >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-sky-500" />
                   <h5 className="text-xl font-bold mb-4 text-slate-800 dark:text-slate-100">
                     {stack.name}
                   </h5>
@@ -122,7 +122,7 @@ const About = () => {
                         viewport={{ once: true }}
                         className="flex items-center gap-2 text-slate-600 dark:text-slate-400"
                       >
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500" />
+                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-sky-500" />
                         <span className="text-sm">{tech}</span>
                       </motion.div>
                     ))}
@@ -159,7 +159,7 @@ const About = () => {
                   <h5 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">
                     {skill.name}
                   </h5>
-                  <p className="text-xs text-purple-600 dark:text-purple-400">
+                  <p className="text-xs text-blue-600 dark:text-blue-400">
                     {skill.category}
                   </p>
                 </motion.div>

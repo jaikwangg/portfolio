@@ -1,24 +1,23 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{
-    type: 'success' | 'error' | null;
-    message: string;
-  }>({ type: null, message: '' });
-  const [useOAuth2, setUseOAuth2] = useState(true); // Toggle between OAuth2 and App Password
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   email: "",
+  //   message: "",
+  // });
+  // const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [submitStatus, setSubmitStatus] = useState<{
+  //   type: 'success' | 'error' | null;
+  //   message: string;
+  // }>({ type: null, message: '' });
+  // const [useOAuth2, setUseOAuth2] = useState(true); // Toggle between OAuth2 and App Password
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+  //   setSubmitStatus({ type: null, message: '' });
 
     // try {
     //   // Choose API endpoint based on toggle
@@ -55,14 +54,14 @@ const Contact = () => {
     // } finally {
     //   setIsSubmitting(false);
     // }
-  };
+  // };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
 
   return (
     <section id="contact" className="py-24 px-4 relative">
@@ -74,10 +73,10 @@ const Contact = () => {
           viewport={{ once: true }}
         >
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent">
               Get In Touch
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-6 rounded-full" />
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-sky-500 mx-auto mb-6 rounded-full" />
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               Have a project in mind or want to collaborate? Feel free to reach out!
             </p>
@@ -96,9 +95,9 @@ const Contact = () => {
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-4 glass-card p-4 rounded-2xl"
                 >
-                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-pink-500/20 to-purple-500/20">
+                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500/20 to-sky-500/20">
                     <svg
-                      className="w-7 h-7 text-pink-500 dark:text-pink-400"
+                      className="w-7 h-7 text-blue-500 dark:text-blue-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -121,9 +120,9 @@ const Contact = () => {
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-4 glass-card p-4 rounded-2xl"
                 >
-                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500/20 to-pink-500/20">
+                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-sky-500/20 to-blue-500/20">
                     <svg
-                      className="w-7 h-7 text-purple-500 dark:text-purple-400"
+                      className="w-7 h-7 text-sky-500 dark:text-sky-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -159,7 +158,7 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-pink-500 dark:hover:text-pink-400 transition-all duration-300"
+                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300"
                       aria-label="GitHub"
                     >
                       <svg
@@ -178,7 +177,7 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-purple-500 dark:hover:text-purple-400 transition-all duration-300"
+                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300"
                       aria-label="Instagram"
                     >
                       <svg
@@ -193,7 +192,7 @@ const Contact = () => {
                 </div>
 
                 {/* API Method Toggle (for development/testing) */}
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                {/* <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center space-x-3">
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">API Method:</span>
                     <button
@@ -222,11 +221,11 @@ const Contact = () => {
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     {useOAuth2 ? 'Using OAuth2 (more secure)' : 'Using App Password (simpler setup)'}
                   </p>
-                </div>
+                </div> */}
               </div>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -234,7 +233,6 @@ const Contact = () => {
             >
               <div className="glass-card rounded-3xl p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Status Message */}
                 {submitStatus.type && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -260,7 +258,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 glass-card rounded-xl border border-purple-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="w-full px-4 py-3 glass-card rounded-xl border border-blue-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                     placeholder="Your name"
                     required
                   />
@@ -277,7 +275,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 glass-card rounded-xl border border-purple-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="w-full px-4 py-3 glass-card rounded-xl border border-blue-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                     placeholder="your.email@example.com"
                     required
                   />
@@ -294,7 +292,7 @@ const Contact = () => {
                     onChange={handleChange}
                     disabled={isSubmitting}
                     rows={4}
-                    className="w-full px-4 py-3 glass-card rounded-xl border border-purple-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all resize-none"
+                    className="w-full px-4 py-3 glass-card rounded-xl border border-blue-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all resize-none"
                     placeholder="Tell me about your project..."
                     required
                   />
@@ -318,12 +316,12 @@ const Contact = () => {
                 </motion.button>
                 </form>
               </div>
-            </motion.div>
+            </motion.div> */}
           </div>
         </motion.div>
       </div>
     </section>
   );
-};
+}
 
-export default Contact; 
+export default Contact;

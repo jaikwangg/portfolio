@@ -26,7 +26,7 @@ const projects = [
     link: "#"
   },
   {
-    title: "Project Two",
+    title: "",
     description: "An e-commerce platform with real-time inventory management.",
     image: "/project2.jpg",
     tags: ["React", "Node.js", "MongoDB"],
@@ -50,11 +50,25 @@ const hackathonPrototypes = [
     link: "#"
   },
   {
-    title: "AidChain",
+    title: "baan-un-jai-planner",
     description: "A disaster relief fund tracker ensuring accountability with blockchain.",
     image: "/hackathon2.jpg",
     tags: ["Solidity", "IPFS", "Tailwind"],
     link: "#"
+  },
+  {
+    title: "aun-jai-care-connect",
+    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
+    image: "/hackathon2.jpg",
+    tags: ["Solidity", "IPFS", "Tailwind"],
+    link: "#"
+  },
+  {
+    title: "temple-guide",
+    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
+    image: "/hackathon2.jpg",
+    tags: ["Solidity", "IPFS", "Tailwind"],
+    link: "https://jaikwangg.github.io/temple-guide/"
   }
 ];
 
@@ -66,10 +80,10 @@ const Section = ({ title, description, projects }: SectionProps) => (
     viewport={{ once: true }}
     className="mb-16"
   >
-    <h2 className="text-5xl font-extrabold mb-4 text-center bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+    <h2 className="text-5xl font-extrabold mb-4 text-center bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent">
       {title}
     </h2>
-    <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-6 rounded-full" />
+    <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-sky-500 mx-auto mb-6 rounded-full" />
     <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-center mb-12 text-lg">{description}</p>
 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -83,7 +97,7 @@ const Section = ({ title, description, projects }: SectionProps) => (
           whileHover={{ y: -8, scale: 1.02 }}
           className="glass-card rounded-3xl overflow-hidden group cursor-pointer transition-all duration-300"
         >
-          <div className="aspect-video bg-gradient-to-br from-pink-200/50 to-purple-200/50 dark:from-pink-900/30 dark:to-purple-900/30 relative overflow-hidden">
+          <div className="aspect-video bg-gradient-to-br from-blue-200/50 to-sky-200/50 dark:from-blue-900/30 dark:to-sky-900/30 relative overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-4xl opacity-50">🚀</span>
             </div>
@@ -94,7 +108,7 @@ const Section = ({ title, description, projects }: SectionProps) => (
           </div>
 
           <div className="p-6">
-            <h3 className="text-2xl font-bold mb-3 text-slate-800 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+            <h3 className="text-2xl font-bold mb-3 text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               {project.title}
             </h3>
             <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">{project.description}</p>
@@ -102,7 +116,7 @@ const Section = ({ title, description, projects }: SectionProps) => (
               {project.tags.map((tag, tagIndex) => (
                 <span
                   key={tagIndex}
-                  className="px-3 py-1.5 text-xs font-semibold rounded-full glass-card text-purple-600 dark:text-purple-400 border border-purple-500/30"
+                  className="px-3 py-1.5 text-xs font-semibold rounded-full glass-card text-blue-600 dark:text-blue-400 border border-blue-500/30"
                 >
                   {tag}
                 </span>
@@ -110,7 +124,7 @@ const Section = ({ title, description, projects }: SectionProps) => (
             </div>
             <a
               href={project.link}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-purple-600 dark:text-purple-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors group/link"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-sky-500 dark:hover:text-sky-400 transition-colors group/link"
             >
               View Project
               <motion.span

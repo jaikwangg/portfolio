@@ -5,14 +5,14 @@
   --color-scheme: light dark;
 }
 
-/* Futuristic Color Palette */
+/* Futuristic Color Palette - Blue Sky Theme */
 :root {
   --gradient-start: #e0f2fe; /* Light blue */
-  --gradient-end: #e9d5ff; /* Pastel purple */
-  --neon-pink: #ec4899;
-  --neon-purple: #a855f7;
-  --accent-pink: #f472b6;
-  --accent-purple: #c084fc;
+  --gradient-end: #bae6fd; /* Sky blue */
+  --neon-blue: #3b82f6;
+  --neon-sky: #0ea5e9;
+  --accent-blue: #60a5fa;
+  --accent-sky: #38bdf8;
 }
 
 /* Force explicit theme variables - this is crucial */
@@ -46,7 +46,7 @@ body {
 }
 
 .dark body {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0c4a6e 100%);
 }
 
 /* Force Tailwind classes to work correctly */
@@ -181,32 +181,32 @@ html.dark {
 }
 
 .dark .glass-card {
-  background: rgba(30, 27, 75, 0.4);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.2);
+  background: rgba(30, 58, 138, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.2);
 }
 
 /* Neon glow effects */
-.neon-pink {
-  text-shadow: 0 0 10px rgba(236, 72, 153, 0.5),
-               0 0 20px rgba(236, 72, 153, 0.3),
-               0 0 30px rgba(236, 72, 153, 0.2);
+.neon-blue {
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5),
+               0 0 20px rgba(59, 130, 246, 0.3),
+               0 0 30px rgba(59, 130, 246, 0.2);
 }
 
-.neon-purple {
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5),
-               0 0 20px rgba(168, 85, 247, 0.3),
-               0 0 30px rgba(168, 85, 247, 0.2);
+.neon-sky {
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.5),
+               0 0 20px rgba(14, 165, 233, 0.3),
+               0 0 30px rgba(14, 165, 233, 0.2);
 }
 
-.glow-pink {
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.4),
-              0 0 40px rgba(236, 72, 153, 0.2);
+.glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4),
+              0 0 40px rgba(59, 130, 246, 0.2);
 }
 
-.glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4),
-              0 0 40px rgba(168, 85, 247, 0.2);
+.glow-sky {
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.4),
+              0 0 40px rgba(14, 165, 233, 0.2);
 }
 
 /* Floating animation */
@@ -246,20 +246,20 @@ html.dark {
   }
   
   /* Futuristic text colors */
-  .text-neon-pink {
-    color: var(--neon-pink);
+  .text-neon-blue {
+    color: var(--neon-blue);
   }
   
-  .text-neon-purple {
-    color: var(--neon-purple);
+  .text-neon-sky {
+    color: var(--neon-sky);
   }
   
-  .text-accent-pink {
-    color: var(--accent-pink);
+  .text-accent-blue {
+    color: var(--accent-blue);
   }
   
-  .text-accent-purple {
-    color: var(--accent-purple);
+  .text-accent-sky {
+    color: var(--accent-sky);
   }
   
   /* Force theme-aware text colors */
