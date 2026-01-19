@@ -62,6 +62,7 @@ body {
 .light .bg-white { background-color: #ffffff !important; }
 .light .bg-gray-50 { background-color: #f9fafb !important; }
 .light .bg-gray-100 { background-color: #f3f4f6 !important; }
+.light .text-white { color: #000000 !important; }
 .light .text-black { color: #000000 !important; }
 .light .text-gray-900 { color: #111827 !important; }
 .light .text-gray-600 { color: #4b5563 !important; }

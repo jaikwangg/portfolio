@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import ThemeToggle from "./ThemeToggle";
+// import ThemeToggle from "./ThemeToggle";
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -102,15 +102,15 @@ const Navigation = () => {
             ))}
             
             {/* Theme Toggle */}
-            <div className="ml-4">
+            {/* <div className="ml-4">
               <ThemeToggle />
-            </div>
+            </div> */}
           </div>
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center space-x-4">
             {/* Theme Toggle for Mobile */}
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}

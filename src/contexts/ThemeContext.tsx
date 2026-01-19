@@ -26,63 +26,32 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
-  // Function to apply theme to document
-  const applyTheme = (newTheme: Theme) => {
+  // Function to apply theme to document (always dark)
+  const applyDarkTheme = () => {
     const root = document.documentElement;
-    
-    // Remove all theme classes first
-    root.classList.remove('light', 'dark');
-    
-    // Add the new theme class
-    root.classList.add(newTheme);
-    
-    // Set data attribute
-    root.setAttribute('data-theme', newTheme);
-    
-    // Set color-scheme
-    root.style.colorScheme = newTheme;
-    
-    // For debugging - log what we're applying
-    console.log('Applied theme:', newTheme);
-    console.log('HTML classes:', root.className);
-    console.log('Data theme:', root.getAttribute('data-theme'));
+
+    root.classList.remove('light');
+    root.classList.add('dark');
+
+    root.setAttribute('data-theme', 'dark');
+    root.style.colorScheme = 'dark';
   };
 
   useEffect(() => {
-    // Initial theme setup
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const initialTheme = savedTheme || systemTheme;
-    
-    console.log('Initial theme setup:', { savedTheme, systemTheme, initialTheme });
-    
-    // Apply theme immediately
-    applyTheme(initialTheme);
-    
-    setTheme(initialTheme);
+    // Initial theme setup: always dark
+    applyDarkTheme();
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (mounted) {
-      // Apply theme and save to localStorage
-      applyTheme(theme);
-      localStorage.setItem('theme', theme);
-    }
-  }, [theme, mounted]);
-
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    console.log('Toggling theme from', theme, 'to', newTheme);
-    setTheme(newTheme);
+    // No-op: theme is locked to dark
   };
 
   const handleSetTheme = (newTheme: Theme) => {
-    console.log('Setting theme to', newTheme);
-    setTheme(newTheme);
+    void newTheme; // No-op: theme is locked to dark
   };
 
   const value = {

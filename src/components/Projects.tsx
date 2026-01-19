@@ -33,7 +33,7 @@ const projects = [
     link: "#"
   },
   {
-    title: "Project Three",
+    title: "KMITL science website",
     description: "A mobile-first responsive dashboard for data visualization.",
     image: "/project3.jpg",
     tags: ["React", "D3.js", "Firebase"],
@@ -43,25 +43,25 @@ const projects = [
 
 const hackathonPrototypes = [
   {
-    title: "ZK-VoteChain",
+    title: "ZKcert",
     description: "A zero-knowledge voting prototype for transparent yet private elections.",
     image: "/hackathon1.jpg",
     tags: ["ZK-SNARK", "Ethereum", "Next.js"],
-    link: "#"
+    link: "https://jaikwangg.github.io/zkcert/"
   },
   {
     title: "baan-un-jai-planner",
     description: "A disaster relief fund tracker ensuring accountability with blockchain.",
     image: "/hackathon2.jpg",
     tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "#"
+    link: "https://jaikwangg.github.io/baan-un-jai-planner/"
   },
   {
     title: "aun-jai-care-connect",
     description: "A disaster relief fund tracker ensuring accountability with blockchain.",
     image: "/hackathon2.jpg",
     tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "#"
+    link: "https://jaikwangg.github.io/aun-jai-care-connect/"
   },
   {
     title: "temple-guide",
@@ -69,6 +69,20 @@ const hackathonPrototypes = [
     image: "/hackathon2.jpg",
     tags: ["Solidity", "IPFS", "Tailwind"],
     link: "https://jaikwangg.github.io/temple-guide/"
+  },
+  {
+    title: "INSURPLAN",
+    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
+    image: "/hackathon2.jpg",
+    tags: ["Solidity", "IPFS", "Tailwind"],
+    link: "https://insurplan.netlify.app/"
+  },
+  {
+    title: "MedTrack",
+    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
+    image: "/hackathon2.jpg",
+    tags: ["Solidity", "IPFS", "Tailwind"],
+    link: "https://v0-medication-tracker-prototype.vercel.app/"
   }
 ];
 
