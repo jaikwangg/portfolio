@@ -1,14 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link: string;
-}
+import Link from "next/link";
+import { allProjects, Project } from "@/data/projects";
 
 interface SectionProps {
   title: string;
@@ -16,75 +10,8 @@ interface SectionProps {
   projects: Project[];
 }
 
-
-const projects = [
-  {
-    title: "Fortoon",
-    description: "A full-stack web application built with Next.js and TypeScript.",
-    image: "/project1.jpg",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-    link: "#"
-  },
-  {
-    title: "",
-    description: "An e-commerce platform with real-time inventory management.",
-    image: "/project2.jpg",
-    tags: ["React", "Node.js", "MongoDB"],
-    link: "#"
-  },
-  {
-    title: "KMITL science website",
-    description: "A mobile-first responsive dashboard for data visualization.",
-    image: "/project3.jpg",
-    tags: ["React", "D3.js", "Firebase"],
-    link: "#"
-  }
-];
-
-const hackathonPrototypes = [
-  {
-    title: "ZKcert",
-    description: "A zero-knowledge voting prototype for transparent yet private elections.",
-    image: "/hackathon1.jpg",
-    tags: ["ZK-SNARK", "Ethereum", "Next.js"],
-    link: "https://jaikwangg.github.io/zkcert/"
-  },
-  {
-    title: "baan-un-jai-planner",
-    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
-    image: "/hackathon2.jpg",
-    tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "https://jaikwangg.github.io/baan-un-jai-planner/"
-  },
-  {
-    title: "aun-jai-care-connect",
-    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
-    image: "/hackathon2.jpg",
-    tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "https://jaikwangg.github.io/aun-jai-care-connect/"
-  },
-  {
-    title: "temple-guide",
-    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
-    image: "/hackathon2.jpg",
-    tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "https://jaikwangg.github.io/temple-guide/"
-  },
-  {
-    title: "INSURPLAN",
-    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
-    image: "/hackathon2.jpg",
-    tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "https://insurplan.netlify.app/"
-  },
-  {
-    title: "MedTrack",
-    description: "A disaster relief fund tracker ensuring accountability with blockchain.",
-    image: "/hackathon2.jpg",
-    tags: ["Solidity", "IPFS", "Tailwind"],
-    link: "https://v0-medication-tracker-prototype.vercel.app/"
-  }
-];
+const projects = allProjects.filter(p => p.category === 'project');
+const hackathonPrototypes = allProjects.filter(p => p.category === 'prototype');
 
 const Section = ({ title, description, projects }: SectionProps) => (
   <motion.div
@@ -111,15 +38,31 @@ const Section = ({ title, description, projects }: SectionProps) => (
           whileHover={{ y: -8, scale: 1.02 }}
           className="glass-card rounded-3xl overflow-hidden group cursor-pointer transition-all duration-300"
         >
-          <div className="aspect-video bg-gradient-to-br from-blue-200/50 to-sky-200/50 dark:from-blue-900/30 dark:to-sky-900/30 relative overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-4xl opacity-50">🚀</span>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="text-white font-semibold">View Details →</span>
-            </div>
-          </div>
+          {project.link && project.link !== '#' ? (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="block">
+              <div className="aspect-video bg-gradient-to-br from-blue-200/50 to-sky-200/50 dark:from-blue-900/30 dark:to-sky-900/30 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-4xl opacity-50">🚀</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-white font-semibold">Visit Live Site →</span>
+                </div>
+              </div>
+            </a>
+          ) : (
+            <Link href={`/projects/${project.id}`}>
+              <div className="aspect-video bg-gradient-to-br from-blue-200/50 to-sky-200/50 dark:from-blue-900/30 dark:to-sky-900/30 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-4xl opacity-50">🚀</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-white font-semibold">View Details →</span>
+                </div>
+              </div>
+            </Link>
+          )}
 
           <div className="p-6">
             <h3 className="text-2xl font-bold mb-3 text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
@@ -136,20 +79,39 @@ const Section = ({ title, description, projects }: SectionProps) => (
                 </span>
               ))}
             </div>
-            <a
-              href={project.link}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-sky-500 dark:hover:text-sky-400 transition-colors group/link"
-            >
-              View Project
-              <motion.span
-                className="inline-block"
-                initial={{ x: 0 }}
-                whileHover={{ x: 4 }}
-                transition={{ type: "spring", stiffness: 400 }}
+            {project.link && project.link !== '#' ? (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-sky-500 dark:hover:text-sky-400 transition-colors group/link"
               >
-                →
-              </motion.span>
-            </a>
+                View Project
+                <motion.span
+                  className="inline-block"
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  →
+                </motion.span>
+              </a>
+            ) : (
+              <Link
+                href={`/projects/${project.id}`}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-sky-500 dark:hover:text-sky-400 transition-colors group/link"
+              >
+                View Details
+                <motion.span
+                  className="inline-block"
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  →
+                </motion.span>
+              </Link>
+            )}
           </div>
         </motion.div>
       ))}
