@@ -112,7 +112,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Email</h4>
-                    <p className="text-slate-600 dark:text-slate-400">Worakij.Wanwong@gmail.com</p>
+                    <p className="text-slate-600 dark:text-slate-400">Worakij.W@gmail.com</p>
                   </div>
                 </motion.div>
 
