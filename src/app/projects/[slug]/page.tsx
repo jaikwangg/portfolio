@@ -1,4 +1,4 @@
-import { getProjectBySlug, allProjects, createSlug } from "@/data/projects";
+import { getProjectBySlug, allProjects } from "@/data/projects";
 import ProjectDetailClient from "./ProjectDetailClient";
 
 export function generateStaticParams() {
