@@ -84,7 +84,9 @@ export default function ProjectDetailClient({ project }: { project: Project | un
                   alt={project.title}
                   fill
                   className="object-cover"
-                  unoptimized
+                  priority
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                 />
               </div>
 

@@ -23,7 +23,9 @@ export const createSlug = (title: string): string => {
 // Get base path for images (handles GitHub Pages deployment)
 const getImagePath = (filename: string) => {
   const basePath = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
-  return `${basePath}/${filename}`;
+  // Use WebP format for better performance
+  const webpFilename = filename.replace('.png', '.webp');
+  return `${basePath}/${webpFilename}`;
 };
 
 export const allProjects: Project[] = [
