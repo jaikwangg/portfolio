@@ -20,13 +20,19 @@ export const createSlug = (title: string): string => {
     .replace(/(^-|-$)/g, '');
 };
 
+// Get base path for images (handles GitHub Pages deployment)
+const getImagePath = (filename: string) => {
+  const basePath = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
+  return `${basePath}/${filename}`;
+};
+
 export const allProjects: Project[] = [
   {
     id: 'fortoon',
     title: 'Fortoon',
     description: 'Full-stack web application built with Next.js and TypeScript.',
     longDescription: 'Fortoon is a full-stack web application showcasing modern web development practices. Built with Next.js for optimal performance and TypeScript for type safety, this project demonstrates frontend architecture and user experience design.',
-    image: '/project-fortoon.png',
+    image: getImagePath('project-fortoon.png'),
     tags: ['Full-Stack', 'TypeScript', 'Next.js'],
     link: '#',
     category: 'project',
@@ -43,7 +49,7 @@ export const allProjects: Project[] = [
     title: 'Outfit Fashion Recommendation System',
     description: 'AI-driven system suggesting outfits based on user preferences and image analysis.',
     longDescription: 'An intelligent fashion recommendation system powered by machine learning. Analyzes user preferences, style patterns, and image inputs to provide personalized outfit suggestions. Combines computer vision with recommendation algorithms for accurate fashion advice.',
-    image: '/project-outfit.png',
+    image: getImagePath('project-outfit.png'),
     tags: ['AI/ML', 'Computer Vision', 'Recommendation'],
     link: '#',
     category: 'project',
@@ -60,7 +66,7 @@ export const allProjects: Project[] = [
     title: 'KMITL Science Website',
     description: 'Frontend development for KMITL Science Department with team collaboration.',
     longDescription: 'Collaborative frontend development for KMITL Science Department website. Worked in a team using ClickUp for project management, developing responsive components and data visualizations for academic content presentation.',
-    image: '/project-kmitl.png',
+    image: getImagePath('project-kmitl.png'),
     tags: ['Frontend', 'React', 'Data Visualization'],
     link: 'https://www.science.kmitl.ac.th/en',
     category: 'project',
@@ -77,7 +83,7 @@ export const allProjects: Project[] = [
     title: 'MATH24',
     description: 'Multiplayer mathematical puzzle game with local network connectivity.',
     longDescription: 'Multiplayer mathematical puzzle game where players compete to combine four numbers using arithmetic operations to reach 24. Features local network connectivity allowing multiple players on the same network to compete in real-time, improving mental math skills through engaging competitive gameplay.',
-    image: '/project-outfit.png',
+    image: getImagePath('project-outfit.png'),
     tags: ['Python', 'Multiplayer', 'Networking'],
     link: '#',
     category: 'project',
@@ -94,7 +100,7 @@ export const allProjects: Project[] = [
     title: 'ZKcert',
     description: 'Zero-knowledge proof certification for privacy-preserving credential verification.',
     longDescription: 'Zero-knowledge proof-based certification system built on Ethereum blockchain. Ensures transparency while maintaining privacy through ZK-SNARK cryptographic techniques. Demonstrates secure, verifiable, and private credential verification without revealing sensitive data.',
-    image: '/project-zkcert.png',
+    image: getImagePath('project-zkcert.png'),
     tags: ['Blockchain', 'ZK-Proofs', 'Cryptography'],
     link: 'https://jaikwangg.github.io/zkcert/',
     github: 'https://github.com/jaikwangg/zkcert',
@@ -112,7 +118,7 @@ export const allProjects: Project[] = [
     title: 'Baan Un Jai Planner',
     description: 'Blockchain-based disaster relief fund tracker for transparent humanitarian aid.',
     longDescription: 'Disaster relief fund tracking system using blockchain for transparency and accountability. Tracks donations and fund allocation on an immutable ledger, providing donors with complete visibility into contribution usage and impact.',
-    image: '/project-outfit.png',
+    image: getImagePath('project-outfit.png'),
     tags: ['Blockchain', 'Social Impact', 'Transparency'],
     link: 'https://jaikwangg.github.io/baan-un-jai-planner/',
     github: 'https://github.com/jaikwangg/baan-un-jai-planner',
@@ -130,7 +136,7 @@ export const allProjects: Project[] = [
     title: 'Aun Jai Care Connect',
     description: 'Healthcare coordination platform connecting patients with providers.',
     longDescription: 'Healthcare coordination platform bridging patients and providers. Facilitates appointment scheduling, care plan management, and secure communication to improve healthcare accessibility and patient outcomes.',
-    image: '/project-aun-jai-care-connect.png',
+    image: getImagePath('project-aun-jai-care-connect.png'),
     tags: ['Healthcare', 'Coordination', 'Web App'],
     link: 'https://jaikwangg.github.io/aun-jai-care-connect/',
     github: 'https://github.com/jaikwangg/aun-jai-care-connect',
@@ -148,7 +154,7 @@ export const allProjects: Project[] = [
     title: 'Temple Guide',
     description: 'Interactive temple guide with maps and cultural information for visitors.',
     longDescription: 'Interactive web application providing comprehensive temple information including location, history, and cultural significance. Features interactive maps and rich media content to help visitors explore and learn about temples.',
-    image: '/project-temple-guide.png',
+    image: getImagePath('project-temple-guide.png'),
     tags: ['Tourism', 'Maps', 'Cultural Heritage'],
     link: 'https://jaikwangg.github.io/temple-guide/',
     github: 'https://github.com/jaikwangg/temple-guide',
@@ -166,7 +172,7 @@ export const allProjects: Project[] = [
     title: 'INSURPLAN',
     description: 'Insurance planning platform for comparing and selecting optimal plans.',
     longDescription: 'Comprehensive insurance planning platform helping users compare, analyze, and select insurance plans. Provides detailed comparisons, coverage analysis, and personalized recommendations to simplify decision-making.',
-    image: '/project-insurplan.png',
+    image: getImagePath('project-insurplan.png'),
     tags: ['FinTech', 'Insurance', 'Comparison'],
     link: 'https://insurplan.netlify.app/',
     github: 'https://github.com/jaikwangg/insurplan',
@@ -184,7 +190,7 @@ export const allProjects: Project[] = [
     title: 'MedTrack',
     description: 'Medication tracking and reminder system for prescription management.',
     longDescription: 'Medication tracking and reminder system helping users manage prescriptions effectively. Provides scheduled reminders, tracks medication history, monitors adherence rates, and maintains health records through an intuitive interface.',
-    image: '/project-medtrack.png',
+    image: getImagePath('project-medtrack.png.png'),
     tags: ['Healthcare', 'Productivity', 'Tracking'],
     link: 'https://v0-medication-tracker-prototype.vercel.app/',
     category: 'prototype',
