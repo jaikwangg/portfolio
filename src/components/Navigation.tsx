@@ -13,7 +13,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const { scrollY } = useScroll();
-  const headerHeight = useTransform(scrollY, [0, 100], [80, 60]);
+  const headerHeight = useTransform(scrollY, [0, 100], [64, 54]);
   // const headerOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95]);
   // const headerBlur = useTransform(scrollY, [0, 100], [8, 12]);
 
@@ -56,15 +56,15 @@ const Navigation = () => {
       style={{
         height: headerHeight,
       }}
-      className={`fixed top-4 left-4 right-4 z-50 glass rounded-2xl transition-all duration-300 ${
+      className={`fixed left-3 right-3 top-3 z-50 rounded-[1.25rem] glass transition-all duration-300 md:left-4 md:right-4 md:top-4 md:rounded-2xl ${
         isScrolled ? "shadow-xl glow-blue" : "shadow-lg"
       }`}
     >
-      <div className="container mx-auto px-6 h-full">
+      <div className="container mx-auto h-full px-4 md:px-6">
         <div className="flex items-center justify-between h-full">
           <Link 
             href="/" 
-            className="text-xl font-bold relative group"
+            className="relative text-base font-bold group md:text-xl"
           >
             <span className="relative z-10 bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">JK</span>
             <motion.span
@@ -76,12 +76,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden items-center space-x-3 md:flex lg:space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
-                className={`relative group px-4 py-2 rounded-lg transition-all duration-300 font-medium ${
+                className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 lg:px-4 ${
                   pathname === item.path 
                     ? "text-blue-600 dark:text-blue-400" 
                     : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
@@ -108,13 +108,14 @@ const Navigation = () => {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="md:hidden flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:hidden">
             {/* Theme Toggle for Mobile */}
             {/* <ThemeToggle /> */}
             
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg glass-card hover:bg-blue-500/10 transition-colors duration-300"
+              className="rounded-xl p-2 glass-card transition-colors duration-300 hover:bg-blue-500/10"
+              aria-label="Toggle menu"
             >
               <svg
                 className="w-6 h-6 text-slate-700 dark:text-slate-300"
@@ -148,14 +149,14 @@ const Navigation = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="absolute top-full left-0 right-0 mt-2 rounded-2xl shadow-2xl z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-2 border-blue-500/30 dark:border-blue-400/30"
+                  className="absolute top-full left-0 right-0 z-50 mt-2 overflow-hidden rounded-[1.4rem] border border-blue-500/20 bg-white/92 shadow-2xl backdrop-blur-xl dark:border-blue-400/20 dark:bg-slate-900/94"
                 >
-                  <div className="container mx-auto px-6 py-4">
+                  <div className="container mx-auto px-3 py-3">
                     {navItems.map((item) => (
                       <button
                         key={item.id}
                         onClick={() => handleMobileNavClick(item.id)}
-                        className="block w-full text-left py-3 px-4 rounded-lg font-medium text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/20 dark:hover:bg-blue-500/10 transition-all duration-300"
+                        className="block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-800 transition-all duration-300 hover:bg-blue-500/10 hover:text-blue-600 dark:text-slate-200 dark:hover:bg-blue-500/10 dark:hover:text-blue-400"
                       >
                         {item.name}
                       </button>

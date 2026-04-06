@@ -31,34 +31,34 @@ const socials = [
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden px-4 pb-20 pt-32 md:pb-28 md:pt-40">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden px-4 pb-8 pt-20 md:pb-10 md:pt-28">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.12),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.1),_transparent_28%)]" />
 
-      <div className="container relative z-10 mx-auto max-w-6xl">
-        <div className="grid items-center gap-16 lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="max-w-3xl">
-            <p className="mb-5 inline-flex rounded-full border border-slate-200/80 bg-white/75 px-4 py-2 text-sm font-medium tracking-wide text-slate-600 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-300">
+      <div className="container relative z-10 mx-auto max-w-7xl">
+        <div className="grid items-center gap-6 sm:gap-8 lg:gap-10 xl:gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]">
+          <div className="max-w-3xl text-center lg:text-left">
+            <p className="mb-4 inline-flex rounded-full border border-slate-200/80 bg-white/75 px-3.5 py-2 text-[11px] font-medium tracking-[0.18em] text-slate-600 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-300 sm:px-4 sm:text-sm">
               Full-stack developer based in Bangkok
             </p>
 
-            <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 md:text-7xl">
-              I build thoughtful web experiences that feel polished, fast, and easy to use.
+            <h1 className="mx-auto max-w-[10ch] text-[clamp(2.65rem,11vw,5.3rem)] font-semibold leading-[0.94] tracking-tight text-slate-900 dark:text-slate-50 lg:mx-0">
+              Building modern web products with clarity, speed, and strong UX.
             </h1>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300 md:text-xl">
-              I&apos;m Jaikwang, a developer who enjoys turning product ideas into reliable
-              interfaces and full-stack applications with strong UX fundamentals.
+            <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-slate-600 dark:text-slate-300 sm:text-base md:text-lg md:leading-8 lg:mx-0 lg:max-w-2xl">
+              I&apos;m Jaikwang, a full-stack developer focused on shipping clean interfaces,
+              dependable product flows, and user experiences that feel intentional from the first click.
             </p>
 
             <motion.div
               initial={false}
-              className="mt-10 flex flex-col gap-4 sm:flex-row"
+              className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start"
             >
               <motion.a
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 href="#projects"
-                className="inline-flex items-center justify-center rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-800 dark:bg-blue-500 dark:hover:bg-blue-400"
+                className="inline-flex items-center justify-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-800 dark:bg-blue-500 dark:hover:bg-blue-400"
               >
                 View selected work
               </motion.a>
@@ -66,7 +66,7 @@ const Hero = () => {
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 href="#contact"
-                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white/80 px-6 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:border-slate-600"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white/80 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:border-slate-600"
               >
                 Let&apos;s work together
               </motion.a>
@@ -74,14 +74,14 @@ const Hero = () => {
 
             <motion.div
               initial={false}
-              className="mt-12 grid gap-4 sm:grid-cols-3"
+              className="mt-7 grid gap-3 text-left sm:grid-cols-3"
             >
               {proofPoints.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-slate-200/80 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/45"
+                  className="rounded-2xl border border-slate-200/80 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/45"
                 >
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{item.label}</p>
+                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{item.label}</p>
                   <p className="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-100">
                     {item.value}
                   </p>
@@ -94,45 +94,45 @@ const Hero = () => {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative"
+            className="relative mx-auto mt-2 w-full max-w-md lg:mt-0 lg:max-w-lg"
           >
-            <div className="absolute inset-x-8 top-8 h-64 rounded-full bg-blue-400/15 blur-3xl dark:bg-blue-500/20" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/80 p-8 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.25)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/60">
-              <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-8 dark:border-slate-800 dark:bg-slate-900">
-                <div className="flex items-start justify-between">
+            <div className="absolute inset-x-8 top-8 h-44 rounded-full bg-blue-400/15 blur-3xl dark:bg-blue-500/20 sm:h-52" />
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/80 p-4 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.25)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/60 sm:rounded-[2rem] sm:p-6">
+              <div className="rounded-[1.35rem] border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900 sm:rounded-[1.5rem] sm:p-7">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-sm font-medium uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+                    <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 sm:text-sm">
                       Profile
                     </p>
-                    <h2 className="mt-4 text-3xl font-semibold text-slate-900 dark:text-slate-50">
+                    <h2 className="mt-3 text-xl font-semibold text-slate-900 dark:text-slate-50 sm:text-3xl">
                       Jaikwang
                     </h2>
-                    <p className="mt-2 text-base text-slate-600 dark:text-slate-300">
+                    <p className="mt-1.5 text-sm text-slate-600 dark:text-slate-300 sm:mt-2 sm:text-base">
                       Full-stack Developer
                     </p>
                   </div>
-                  <div className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-300">
+                  <div className="shrink-0 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-300 sm:px-3 sm:text-xs">
                     Available
                   </div>
                 </div>
 
-                <div className="mt-10 space-y-5">
+                <div className="mt-6 space-y-3 sm:mt-8 sm:space-y-4">
                   <div className="border-b border-slate-200 pb-4 dark:border-slate-800">
-                    <p className="text-sm text-slate-500 dark:text-slate-400">What I care about</p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400 sm:text-sm sm:normal-case sm:tracking-normal">What I care about</p>
                     <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
                       Product clarity, maintainable code, and interfaces that users can understand
                       immediately.
                     </p>
                   </div>
                   <div className="border-b border-slate-200 pb-4 dark:border-slate-800">
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Primary tools</p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400 sm:text-sm sm:normal-case sm:tracking-normal">Primary tools</p>
                     <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
                       Next.js, React, TypeScript, Node.js, PostgreSQL, and modern UI systems.
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Links</p>
-                    <div className="mt-3 flex items-center gap-3">
+                    <p className="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400 sm:text-sm sm:normal-case sm:tracking-normal">Links</p>
+                    <div className="mt-3 flex items-center gap-2.5 sm:gap-3">
                       {socials.map((social) => (
                         <motion.a
                           key={social.name}
@@ -141,7 +141,7 @@ const Hero = () => {
                           rel="noopener noreferrer"
                           whileHover={{ y: -2 }}
                           whileTap={{ scale: 0.98 }}
-                          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-blue-300 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-blue-500/40 dark:hover:text-blue-300"
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-blue-300 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-blue-500/40 dark:hover:text-blue-300 sm:h-11 sm:w-11"
                           aria-label={social.name}
                         >
                           {social.icon}

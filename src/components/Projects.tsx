@@ -5,6 +5,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { allProjects, Project } from "@/data/projects";
 
+const smoothEase = [0.22, 1, 0.36, 1] as const;
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 32 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      ease: smoothEase,
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 26, scale: 0.98 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: smoothEase },
+  },
+};
+
 interface SectionProps {
   title: string;
   description: string;
@@ -16,28 +41,36 @@ const hackathonPrototypes = allProjects.filter(p => p.category === 'prototype');
 
 const Section = ({ title, description, projects }: SectionProps) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8 }}
-    viewport={{ once: true }}
-    className="mb-16"
+    variants={sectionVariants}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true, amount: 0.18 }}
+    className="mb-12 sm:mb-14 md:mb-16"
   >
-    <h2 className="text-5xl font-extrabold mb-4 text-center bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent">
+    <motion.h2
+      variants={cardVariants}
+      className="mb-3 text-center text-3xl font-extrabold text-transparent bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text sm:mb-4 sm:text-4xl md:text-5xl"
+    >
       {title}
-    </h2>
-    <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-sky-500 mx-auto mb-6 rounded-full" />
-    <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-center mb-12 text-lg">{description}</p>
+    </motion.h2>
+    <motion.div
+      variants={cardVariants}
+      className="w-24 h-1 bg-gradient-to-r from-blue-500 to-sky-500 mx-auto mb-6 rounded-full"
+    />
+    <motion.p
+      variants={cardVariants}
+      className="mx-auto mb-8 max-w-2xl text-center text-base text-slate-600 dark:text-slate-400 sm:mb-10 sm:text-lg md:mb-12"
+    >
+      {description}
+    </motion.p>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
       {projects.map((project, index) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          viewport={{ once: true }}
+          variants={cardVariants}
           whileHover={{ y: -8, scale: 1.02 }}
-          className="glass-card rounded-3xl overflow-hidden group cursor-pointer transition-all duration-300"
+          className="glass-card group cursor-pointer overflow-hidden rounded-[1.5rem] transition-all duration-300 sm:rounded-3xl"
         >
           {project.link && project.link !== '#' ? (
             <a href={project.link} target="_blank" rel="noopener noreferrer" className="block">
@@ -77,12 +110,12 @@ const Section = ({ title, description, projects }: SectionProps) => (
             </Link>
           )}
 
-          <div className="p-6">
-            <h3 className="text-2xl font-bold mb-3 text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          <div className="p-5 sm:p-6">
+            <h3 className="mb-2.5 text-xl font-bold text-slate-800 transition-colors group-hover:text-blue-600 dark:text-slate-100 dark:group-hover:text-blue-400 sm:mb-3 sm:text-2xl">
               {project.title}
             </h3>
-            <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">{project.description}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
+            <p className="mb-4 text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">{project.description}</p>
+            <div className="mb-4 flex flex-wrap gap-2">
               {project.tags.map((tag, tagIndex) => (
                 <span
                   key={tagIndex}
@@ -134,7 +167,7 @@ const Section = ({ title, description, projects }: SectionProps) => (
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-24 px-4 relative">
+    <section id="projects" className="relative px-4 py-18 sm:py-20 md:py-24">
       <div className="container mx-auto max-w-7xl relative z-10">
         <Section
           title="My Projects"

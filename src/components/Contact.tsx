@@ -1,6 +1,30 @@
 "use client";
 import { motion } from "framer-motion";
 
+const smoothEase = [0.22, 1, 0.36, 1] as const;
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      ease: smoothEase,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: smoothEase },
+  },
+};
+
 const Contact = () => {
   // const [formData, setFormData] = useState({
   //   name: "",
@@ -64,38 +88,36 @@ const Contact = () => {
   // };
 
   return (
-    <section id="contact" className="py-24 px-4 relative">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <section id="contact" className="relative px-4 py-18 sm:py-20 md:py-24">
+      <div className="container mx-auto max-w-6xl px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-transparent">
+          <motion.div variants={itemVariants} className="mb-12 text-center sm:mb-14 md:mb-16">
+            <h2 className="mb-3 bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 bg-clip-text text-3xl font-extrabold text-transparent sm:mb-4 sm:text-4xl md:text-5xl">
               Get In Touch
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-sky-500 mx-auto mb-6 rounded-full" />
-            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
+            <p className="mx-auto max-w-2xl text-base text-slate-600 dark:text-slate-400 sm:text-lg">
               Have a project in mind or want to collaborate? Feel free to reach out!
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid gap-8 md:grid-cols-2 md:gap-12">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
+              variants={itemVariants}
             >
-              <h3 className="text-3xl font-bold mb-8 text-slate-800 dark:text-slate-100">Contact Information</h3>
-              <div className="space-y-6">
+              <h3 className="mb-6 text-2xl font-bold text-slate-800 dark:text-slate-100 sm:mb-8 sm:text-3xl">Contact Information</h3>
+              <div className="space-y-4 sm:space-y-6">
                 <motion.div
+                  variants={itemVariants}
                   whileHover={{ x: 5 }}
-                  className="flex items-center space-x-4 glass-card p-4 rounded-2xl"
+                  className="flex items-center space-x-3 rounded-2xl glass-card p-4 sm:space-x-4"
                 >
-                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500/20 to-sky-500/20">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl glass-card bg-gradient-to-br from-blue-500/20 to-sky-500/20 sm:h-14 sm:w-14">
                     <svg
                       className="w-7 h-7 text-blue-500 dark:text-blue-400"
                       fill="none"
@@ -117,10 +139,11 @@ const Contact = () => {
                 </motion.div>
 
                 <motion.div
+                  variants={itemVariants}
                   whileHover={{ x: 5 }}
-                  className="flex items-center space-x-4 glass-card p-4 rounded-2xl"
+                  className="flex items-center space-x-3 rounded-2xl glass-card p-4 sm:space-x-4"
                 >
-                  <div className="w-14 h-14 glass-card rounded-xl flex items-center justify-center bg-gradient-to-br from-sky-500/20 to-blue-500/20">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl glass-card bg-gradient-to-br from-sky-500/20 to-blue-500/20 sm:h-14 sm:w-14">
                     <svg
                       className="w-7 h-7 text-sky-500 dark:text-sky-400"
                       fill="none"
@@ -148,8 +171,8 @@ const Contact = () => {
                 </motion.div>
 
                 {/* Social Media Links */}
-                <div className="pt-6">
-                  <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-4 text-lg">Follow Me</h4>
+                <motion.div variants={itemVariants} className="pt-4 sm:pt-6">
+                  <h4 className="mb-4 text-base font-semibold text-slate-800 dark:text-slate-100 sm:text-lg">Follow Me</h4>
                   <div className="flex space-x-4">
                     {/* GitHub */}
                     <motion.a
@@ -158,7 +181,7 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl glass-card text-slate-700 transition-all duration-300 hover:text-blue-500 dark:text-slate-300 dark:hover:text-blue-400 sm:h-12 sm:w-12"
                       aria-label="GitHub"
                     >
                       <svg
@@ -177,7 +200,7 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-12 h-12 glass-card rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl glass-card text-slate-700 transition-all duration-300 hover:text-sky-500 dark:text-slate-300 dark:hover:text-sky-400 sm:h-12 sm:w-12"
                       aria-label="Instagram"
                     >
                       <svg
@@ -189,7 +212,7 @@ const Contact = () => {
                       </svg>
                     </motion.a>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* API Method Toggle (for development/testing) */}
                 {/* <div className="pt-4 border-t border-gray-200 dark:border-gray-700">

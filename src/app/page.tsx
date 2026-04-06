@@ -7,8 +7,7 @@ import Navigation from "@/components/Navigation";
 
 export default function Home() {
   return (
-    
-    <main>
+    <main className="overflow-x-hidden">
       <Navigation />
       <div id="home">
         <Hero />
