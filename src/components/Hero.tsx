@@ -36,44 +36,22 @@ const Hero = () => {
 
       <div className="container relative z-10 mx-auto max-w-6xl">
         <div className="grid items-center gap-16 lg:grid-cols-[1.25fr_0.75fr]">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-3xl"
-          >
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-5 inline-flex rounded-full border border-slate-200/80 bg-white/75 px-4 py-2 text-sm font-medium tracking-wide text-slate-600 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-300"
-            >
+          <div className="max-w-3xl">
+            <p className="mb-5 inline-flex rounded-full border border-slate-200/80 bg-white/75 px-4 py-2 text-sm font-medium tracking-wide text-slate-600 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/50 dark:text-slate-300">
               Full-stack developer based in Bangkok
-            </motion.p>
+            </p>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="max-w-4xl text-5xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 md:text-7xl"
-            >
+            <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 md:text-7xl">
               I build thoughtful web experiences that feel polished, fast, and easy to use.
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300 md:text-xl"
-            >
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300 md:text-xl">
               I&apos;m Jaikwang, a developer who enjoys turning product ideas into reliable
               interfaces and full-stack applications with strong UX fundamentals.
-            </motion.p>
+            </p>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
+              initial={false}
               className="mt-10 flex flex-col gap-4 sm:flex-row"
             >
               <motion.a
@@ -95,9 +73,7 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
+              initial={false}
               className="mt-12 grid gap-4 sm:grid-cols-3"
             >
               {proofPoints.map((item) => (
@@ -112,7 +88,7 @@ const Hero = () => {
                 </div>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 28 }}
