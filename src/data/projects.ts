@@ -4,6 +4,7 @@ export interface Project {
   description: string;
   longDescription?: string;
   image: string;
+  imageAlt?: string; // hero alt text when the image is not a screenshot
   tags: string[];
   link: string;
   github?: string;
@@ -87,6 +88,7 @@ export const allProjects: Project[] = [
     description: 'Multiplayer mathematical puzzle game with local network connectivity.',
     longDescription: 'Multiplayer mathematical puzzle game where players compete to combine four numbers using arithmetic operations to reach 24. Features local network connectivity allowing multiple players on the same network to compete in real-time, improving mental math skills through engaging competitive gameplay.',
     image: getImagePath('project-math24.png'),
+    imageAlt: 'MATH24 cover: the number 24 above the tiles 1, 3, 4 and 6',
     tags: ['Python', 'Multiplayer', 'Networking'],
     link: '#',
     github: 'https://github.com/jaikwangg/math24',
@@ -120,8 +122,8 @@ export const allProjects: Project[] = [
   {
     id: 'baan-un-jai-planner',
     title: 'Baan Un Jai Planner',
-    description: 'Loan-readiness self-assessment that estimates credit risk and suggests an action plan.',
-    longDescription: 'A Thai-language credit self-assessment built for the GHB Innovation Hackathon 2025. Five short steps cover income and expenses, debts, saving habits, personal details and goals; the app then estimates the applicant\'s credit risk and turns it into an action plan for becoming loan-ready. A companion Python prototype explores an LLM planner that retrieves lending policies (BM25 + vector search), proposes Plan A/B/C, checks them with a critic model and compares debt-service-ratio scenarios.',
+    description: 'Loan-readiness self-assessment that scores credit risk and suggests an action plan.',
+    longDescription: 'A Thai-language credit self-assessment built for the GHB Innovation Hackathon 2025. Five short steps cover income and expenses, debts, saving habits, personal details and goals; the app then scores the applicant\'s credit risk and turns it into an action plan for becoming loan-ready. A companion Python prototype explores an LLM planner that retrieves lending policies (BM25 + vector search), proposes Plan A/B/C, checks them with a critic model and compares debt-service-ratio scenarios.',
     image: getImagePath('project-baan-un-jai-planner.png'),
     tags: ['FinTech', 'Credit Risk', 'Web App'],
     link: 'https://jaikwangg.github.io/baan-un-jai-planner/',

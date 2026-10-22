@@ -164,7 +164,7 @@ export default function ProjectDetailClient({ project, next, index, total }: Pro
               src={project.image}
               srcSet={heroSrcSet}
               sizes="100vw"
-              alt={`${project.title} screenshot`}
+              alt={project.imageAlt ?? `${project.title} screenshot`}
               width={1200}
               height={684}
               fetchPriority="high"
