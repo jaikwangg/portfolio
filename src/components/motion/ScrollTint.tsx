@@ -65,7 +65,6 @@ export default function ScrollTint({ sections }: ScrollTintProps) {
       };
     }, root);
     return () => mm.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduced, key]);
 
   if (reduced) return null;
