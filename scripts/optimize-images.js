@@ -22,6 +22,12 @@ async function optimizeImages() {
         .webp({ quality: 85 }) // Convert to WebP with 85% quality
         .toFile(inputPath.replace('.png', '.webp'));
       
+      // 2400px variant for the full-bleed project detail hero (1440px wide at 2x).
+      await sharp(inputPath)
+        .resize(2400, null, { withoutEnlargement: true, fit: 'inside' })
+        .webp({ quality: 80 })
+        .toFile(inputPath.replace(/\.png$/, '@2x.webp'));
+
       const webpStats = fs.statSync(inputPath.replace('.png', '.webp'));
       const sizeAfter = (webpStats.size / 1024 / 1024).toFixed(2);
       const reduction = ((1 - webpStats.size / stats.size) * 100).toFixed(1);

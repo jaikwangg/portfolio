@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState, type FocusEvent } from "react";
+import { useEffect, useRef, useState, type FocusEvent } from "react";
 import { allProjects, type Project } from "@/data/projects";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useFinePointer, useIsomorphicLayoutEffect, useReducedMotion } from "@/lib/hooks";
@@ -219,6 +219,25 @@ const ProjectsIndex = () => {
   const reduced = useReducedMotion();
   const previewOn = fine && !reduced;
   const moveRef = useRef<{ x: (v: number) => void; y: (v: number) => void } | null>(null);
+  // Hover previews: fetch them once the page has loaded (idle), so the first
+  // hover never shows an empty frame and they do not compete with the LCP.
+  const [warm, setWarm] = useState(false);
+
+  useEffect(() => {
+    if (!previewOn) return;
+    let idle: number | undefined;
+    const go = () => {
+      idle = window.requestIdleCallback
+        ? window.requestIdleCallback(() => setWarm(true), { timeout: 1500 })
+        : window.setTimeout(() => setWarm(true), 300);
+    };
+    if (document.readyState === "complete") go();
+    else window.addEventListener("load", go, { once: true });
+    return () => {
+      window.removeEventListener("load", go);
+      if (idle !== undefined) (window.cancelIdleCallback ?? window.clearTimeout)(idle);
+    };
+  }, [previewOn]);
 
   useIsomorphicLayoutEffect(() => {
     const preview = previewRef.current;
@@ -306,7 +325,9 @@ const ProjectsIndex = () => {
                           alt=""
                           width={IMG_W}
                           height={IMG_H}
-                          loading="lazy"
+                          // The first rows are in the first screen on phones: load them now (LCP).
+                          priority={i < 2}
+                          loading={i < 2 ? undefined : "lazy"}
                           sizes="(min-width: 768px) 28rem, 100vw"
                           className="aspect-[16/9] h-auto w-full object-cover"
                         />
@@ -338,7 +359,7 @@ const ProjectsIndex = () => {
                 alt=""
                 width={IMG_W}
                 height={IMG_H}
-                loading="lazy"
+                loading={warm ? "eager" : "lazy"}
                 sizes="28vw"
                 className={`h-full w-full object-cover transition-transform duration-1000 ease-out-expo ${
                   active?.id === p.id ? "scale-100" : "scale-125"

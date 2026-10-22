@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { preload } from "react-dom";
 import Navigation from "@/components/Navigation";
 import { MagneticButton, Marquee, RevealOnScroll, SplitReveal } from "@/components/motion";
 import { gsap } from "@/lib/gsap";
@@ -21,6 +22,9 @@ const PILL = { borderRadius: 9999 } as const;
 const pad = (n: number) => String(n).padStart(2, "0");
 /** The data uses "#" as a "not deployed yet" placeholder. */
 const realUrl = (url?: string) => (url && url !== "#" ? url : null);
+/** project-x.webp -> "project-x.webp 1200w, project-x@2x.webp 2400w" (made by scripts/optimize-images.js). */
+const heroSrcSetFor = (src: string) =>
+  src.endsWith(".webp") ? `${src} 1200w, ${src.replace(/\.webp$/, "@2x.webp")} 2400w` : undefined;
 const categoryLabel = (c: Project["category"]) => (c === "project" ? "Project" : "Hackathon prototype");
 
 const Arrow = ({ className }: { className?: string }) => (
@@ -34,6 +38,10 @@ export default function ProjectDetailClient({ project, next, index, total }: Pro
   const heroImgRef = useRef<HTMLImageElement>(null);
   const nextLinkRef = useRef<HTMLAnchorElement>(null);
   const floatRef = useRef<HTMLDivElement>(null);
+
+  // Full-bleed hero: 1200w for phones / 1x, 2400w for 1440px screens at 2x.
+  const heroSrcSet = heroSrcSetFor(project.image);
+  preload(project.image, { as: "image", imageSrcSet: heroSrcSet, imageSizes: "100vw", fetchPriority: "high" });
 
   const live = realUrl(project.link);
   const github = realUrl(project.github);
@@ -149,14 +157,18 @@ export default function ProjectDetailClient({ project, next, index, total }: Pro
         {/* -------------------------------------------------------- hero image */}
         <div className="mt-12 md:mt-16">
           <div ref={figureRef} className="relative aspect-[4/3] w-full overflow-hidden bg-ink-2 md:aspect-[16/9]">
-            <Image
+            {/* Plain <img>: the export is unoptimized, so next/image would not emit a srcset. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               ref={heroImgRef}
               src={project.image}
-              alt={`${project.title} screenshot`}
-              width={1600}
-              height={900}
-              priority
+              srcSet={heroSrcSet}
               sizes="100vw"
+              alt={`${project.title} screenshot`}
+              width={1200}
+              height={684}
+              fetchPriority="high"
+              decoding="async"
               className="h-full w-full object-cover will-change-transform"
             />
           </div>
