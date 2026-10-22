@@ -47,7 +47,7 @@ const facts = [
 const stats = [
   { label: "Projects", value: allProjects.filter((p) => p.category === "project").length },
   { label: "Hackathon prototypes", value: allProjects.filter((p) => p.category === "prototype").length },
-  { label: "Technologies used", value: new Set(allProjects.flatMap((p) => p.technologies ?? [])).size },
+  { label: "Tools & tech", value: new Set(allProjects.flatMap((p) => p.technologies ?? [])).size },
 ];
 
 interface AboutProps {
@@ -157,8 +157,8 @@ const About = ({ titleAs: Title = "h2" }: AboutProps) => {
         <dl className="grid grid-cols-3 gap-4 border-b border-line pb-10 md:pb-14">
           {stats.map((st) => (
             // dt first in the source (valid <dl>), shown under the number.
-            <div key={st.label} className="flex flex-col-reverse">
-              <dt className="mt-3 text-[11px] font-medium uppercase tracking-[0.2em] text-mute md:text-xs">{st.label}</dt>
+            <div key={st.label} className="flex flex-col-reverse justify-end">
+              <dt className="mt-3 text-[11px] font-medium uppercase tracking-[0.12em] text-mute sm:tracking-[0.2em] md:text-xs">{st.label}</dt>
               <dd className="font-display text-display-lg tabular-nums leading-none text-accent">
                 <span aria-hidden="true" data-count={st.value}>
                   {String(st.value).padStart(2, "0")}
