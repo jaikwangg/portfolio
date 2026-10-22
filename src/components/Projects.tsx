@@ -32,10 +32,10 @@ const GalleryCard = ({ project, index }: { project: Project; index: number }) =>
       data-cursor-label="View"
       className="group relative flex h-full flex-col overflow-hidden border border-line bg-ink-2 transition-colors duration-500 hover:border-accent focus-visible:border-accent gallery:justify-between"
     >
-      {/* Image: always shown in the stacked layout; on the rail it wipes
-          in from the bottom on hover / keyboard focus. */}
+      {/* Image: always shown (owner, 22 Oct); on the rail it fills the card under a gradient
+          for the text and zooms slightly on hover / keyboard focus. */}
       <div
-        className="relative aspect-[16/10] overflow-hidden gallery:absolute gallery:inset-0 gallery:aspect-auto gallery:transition-[clip-path] gallery:duration-700 gallery:ease-out-expo gallery:[clip-path:inset(100%_0_0_0)] gallery:group-hover:[clip-path:inset(0_0_0_0)] gallery:group-focus-visible:[clip-path:inset(0_0_0_0)]"
+        className="relative aspect-[16/10] overflow-hidden gallery:absolute gallery:inset-0 gallery:aspect-auto"
       >
         <Image
           src={project.image}
@@ -44,7 +44,7 @@ const GalleryCard = ({ project, index }: { project: Project; index: number }) =>
           height={IMG_H}
           loading="lazy"
           sizes="(min-width: 1024px) 34vw, 100vw"
-          className="h-full w-full object-cover transition-transform duration-1000 ease-out-expo gallery:scale-125 gallery:group-hover:scale-100 gallery:group-focus-visible:scale-100"
+          className="h-full w-full object-cover transition-transform duration-1000 ease-out-expo gallery:scale-100 gallery:group-hover:scale-105 gallery:group-focus-visible:scale-105"
         />
         <div aria-hidden="true" className="absolute inset-0 hidden bg-gradient-to-t from-ink via-ink/50 to-ink/10 gallery:block" />
       </div>
