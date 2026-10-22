@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import PageTransition from "@/components/motion/PageTransition";
 import CustomCursor from "@/components/motion/CustomCursor";
 import SkipLink from "@/components/SkipLink";
+import { INK } from "@/lib/theme";
 
 const display = Anton({
   weight: "400",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0e0e0c",
+  themeColor: INK,
   colorScheme: "dark",
 };
 

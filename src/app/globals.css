@@ -18,15 +18,23 @@
    text-display-2xl ... text-display-sm, ease-out-expo / ease-in-out-expo
    ------------------------------------------------------------------------ */
 @theme {
-  --color-ink: #0e0e0c;
-  --color-ink-2: #171714;
-  --color-ink-3: #24241f;
-  --color-paper: #f2efe6;
-  --color-mute: #a29e92;
-  --color-line: rgb(242 239 230 / 0.14);
-  --color-accent: #ff5a1f;
-  --color-accent-soft: rgb(255 90 31 / 0.16);
-  --color-on-accent: #0e0e0c;
+  /* Cool palette (Oct 2026): deep navy ink, frost text, electric cyan accent.
+     Every colour on the site derives from these; nothing else hard-codes a hex
+     except the theme-color meta (src/lib/theme.ts mirrors --color-ink). */
+  --color-ink: #0a0f1e;
+  --color-ink-2: #111a2e;
+  --color-ink-3: #1b2741;
+  --color-paper: #e6f0fa;
+  --color-mute: #8da2bf;
+  --color-line: rgb(230 240 250 / 0.14);
+  --color-accent: #3ddcff;
+  --color-accent-soft: rgb(61 220 255 / 0.12);
+  --color-on-accent: #0a0f1e;
+  /* Decorative only (hero mesh, section tints); never used for text. */
+  --color-accent-2: #8b7dff;
+  --color-tint-work: #10183a;
+  --color-tint-about: #071a26;
+  --color-tint-contact: #17133a;
 
   --font-display: var(--font-anton), "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -112,7 +120,12 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgb(14 14 12 / 0.82) 0%, rgb(14 14 12 / 0.6) 55%, rgb(14 14 12 / 0) 100%);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-ink) 82%, transparent) 0%,
+    color-mix(in srgb, var(--color-ink) 60%, transparent) 55%,
+    transparent 100%
+  );
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
@@ -195,11 +208,11 @@ body {
 .rail-scrim {
   background: linear-gradient(
     to bottom,
-    rgb(14 14 12 / 0.92) 0%,
-    rgb(14 14 12 / 0.86) 12%,
-    rgb(14 14 12 / 0.55) 28%,
-    rgb(14 14 12 / 0.55) 45%,
-    rgb(14 14 12 / 0.9) 68%,
+    color-mix(in srgb, var(--color-ink) 92%, transparent) 0%,
+    color-mix(in srgb, var(--color-ink) 86%, transparent) 12%,
+    color-mix(in srgb, var(--color-ink) 55%, transparent) 28%,
+    color-mix(in srgb, var(--color-ink) 55%, transparent) 45%,
+    color-mix(in srgb, var(--color-ink) 90%, transparent) 68%,
     var(--color-ink) 100%
   );
 }
