@@ -101,10 +101,11 @@ const ProjectsGallery = () => {
       const total = cards.length - 1; // the last item is the "All projects" link
       let shown = 1;
 
-      // Velocity lean: cards skew with the scroll speed and spring back at rest.
+      // Velocity lean: the card images skew with the scroll speed and spring back
+      // at rest (the text stays upright; one transformed layer per card).
       const lean = { v: 0 };
-      const setSkew = gsap.quickSetter(cards, "skewX", "deg");
-      const clampSkew = gsap.utils.clamp(-5, 5);
+      const setSkew = gsap.quickSetter(gsap.utils.toArray<HTMLElement>("[data-parallax]", track), "skewX", "deg");
+      const clampSkew = gsap.utils.clamp(-6, 6);
 
       const tween = gsap.to(track, {
         x: () => -distance(),
@@ -160,10 +161,11 @@ const ProjectsGallery = () => {
         );
         gsap.fromTo(
           inner,
-          { xPercent: 7, scale: 1.16 },
+          // scale leaves room for the drift (+-5%) plus the velocity skew (<= 6deg)
+          { xPercent: 5, scale: 1.24 },
           {
-            xPercent: -7,
-            scale: 1.16,
+            xPercent: -5,
+            scale: 1.24,
             ease: "none",
             scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "right left", scrub: true },
           },
