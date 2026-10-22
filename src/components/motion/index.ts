@@ -5,3 +5,4 @@ export { default as Marquee } from "./Marquee";
 export { default as MagneticButton } from "./MagneticButton";
 export { default as CustomCursor } from "./CustomCursor";
 export { default as PageTransition, usePageReveal } from "./PageTransition";
+export { default as ScrollTint } from "./ScrollTint";

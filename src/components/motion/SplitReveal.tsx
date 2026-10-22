@@ -27,6 +27,13 @@ export interface SplitRevealProps {
   start?: string;
   /** Reveal once (default) or reverse when scrolled back above. */
   once?: boolean;
+  /**
+   * Tie the reveal to scroll position instead of playing it: each token rises
+   * (and untilts) in step with the scroll, from `start` until the element's
+   * top reaches `scrubEnd` (default "top 45%"). Scrolling back reverses it.
+   */
+  scrub?: boolean;
+  scrubEnd?: string;
   className?: string;
 }
 
@@ -45,6 +52,8 @@ export default function SplitReveal({
   duration = 0.9,
   start = "top 85%",
   once = true,
+  scrub = false,
+  scrubEnd = "top 45%",
   className,
 }: SplitRevealProps) {
   const ref = useRef<HTMLElement>(null);
@@ -70,6 +79,21 @@ export default function SplitReveal({
         tokens.forEach((t) => groups.push([t]));
       }
 
+      if (scrub) {
+        gsap.fromTo(
+          tokens,
+          { yPercent: 115, rotate: 7, transformOrigin: "0% 100%" },
+          {
+            yPercent: 0,
+            rotate: 0,
+            ease: "power2.out",
+            stagger: { each: 0.08, from: "start" },
+            scrollTrigger: { trigger: el, start, end: scrubEnd, scrub: 0.6 },
+          },
+        );
+        return;
+      }
+
       gsap.set(tokens, { yPercent: 110 });
       const tl = gsap.timeline({
         paused: true,
@@ -87,7 +111,7 @@ export default function SplitReveal({
       });
     }, el);
     return () => ctx.revert();
-  }, [text, split, trigger, step, delay, duration, start, once]);
+  }, [text, split, trigger, step, delay, duration, start, once, scrub, scrubEnd]);
 
   let index = 0;
   const token = (content: string, key: string) => (

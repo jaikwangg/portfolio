@@ -27,8 +27,8 @@ const Contact = ({ titleAs: Title = "h2" }: ContactProps) => {
         </p>
 
         <Title id="contact-title" className="font-display text-display-xl uppercase text-paper">
-          <SplitReveal text="Let's work" split="chars" stagger={0.03} className="block" />
-          <SplitReveal text="together" split="chars" stagger={0.03} delay={0.15} className="block text-accent" />
+          <SplitReveal text="Let's work" split="chars" scrub start="top 92%" scrubEnd="top 50%" className="block" />
+          <SplitReveal text="together" split="chars" scrub start="top 92%" scrubEnd="top 50%" className="block text-accent" />
         </Title>
 
         <div className="mt-12 flex flex-col gap-12 md:mt-16 lg:flex-row lg:items-center lg:justify-between">
@@ -86,7 +86,7 @@ const Contact = ({ titleAs: Title = "h2" }: ContactProps) => {
 
       <footer className="border-t border-line">
         <div className="py-6 md:py-10" aria-hidden="true">
-          <Marquee speed={50} direction={-1} velocityFactor={0.2} repeat={3}>
+          <Marquee speed={50} direction={-1} velocityFactor={0.2} skew={9} repeat={3}>
             {["Jaikwang", "Full-stack developer", "Bangkok"].map((t) => (
               <span key={t} className="flex items-center">
                 <span className="text-outline px-6 font-display text-display-lg uppercase md:px-10">{t}</span>

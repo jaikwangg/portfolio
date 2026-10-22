@@ -10,6 +10,8 @@
    hover-motion precise pointer + motion allowed -> hover image previews */
 @custom-variant gallery (@media (min-width: 64rem) and (prefers-reduced-motion: no-preference));
 @custom-variant hover-motion (@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference));
+/* stack        md+ and motion allowed -> sticky stacking cards (About) */
+@custom-variant stack (@media (min-width: 48rem) and (prefers-reduced-motion: no-preference));
 
 /* ---------------------------------------------------------------------------
    Design tokens -> Tailwind utilities
@@ -32,9 +34,9 @@
   --color-on-accent: #0a0f1e;
   /* Decorative only (hero mesh, section tints); never used for text. */
   --color-accent-2: #8b7dff;
-  --color-tint-work: #10183a;
-  --color-tint-about: #071a26;
-  --color-tint-contact: #17133a;
+  --color-tint-work: #111d48;
+  --color-tint-about: #062431;
+  --color-tint-contact: #1d1748;
 
   --font-display: var(--font-anton), "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -66,9 +68,11 @@ html {
   background: var(--color-ink);
 }
 
+/* <body> stays transparent (the ink comes from <html>) so the fixed
+   section-tint layer (ScrollTint, z-index -1) can show behind the content. */
 body {
   min-height: 100vh;
-  background: var(--color-ink);
+  background: transparent;
   color: var(--color-paper);
   text-rendering: optimizeLegibility;
 }
@@ -307,6 +311,78 @@ html.has-custom-cursor *:not(input, textarea, select, [contenteditable="true"]) 
   animation: cue-drip 2.2s var(--ease-in-out-expo) infinite;
 }
 
+/* Hero backdrop: three soft colour fields drifting slowly (transform only,
+   no blur filter: the softness is in the radial gradients) under a static
+   grain tile. Kept faint so the mute intro copy stays >= 4.5:1. */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  /* fade out before the hero's bottom edge, so no seam shows below the band */
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 96%);
+}
+.hero-depth {
+  position: absolute;
+  will-change: transform;
+}
+.hero-blob {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  will-change: transform;
+  animation: blob-drift var(--drift, 22s) ease-in-out infinite alternate;
+}
+@keyframes blob-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(var(--dx, 6%), var(--dy, -4%), 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(calc(var(--dx, 6%) * -0.6), calc(var(--dy, -4%) * -1.2), 0) scale(0.96);
+  }
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Section tint (ScrollTint): fixed glow layers behind the page, cross-faded
+   by opacity as sections come into view. */
+.scroll-tint {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.scroll-tint > div {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity;
+}
+.tint-work {
+  background:
+    radial-gradient(70% 60% at 88% 8%, var(--color-tint-work) 0%, transparent 70%),
+    radial-gradient(60% 50% at 0% 100%, var(--color-tint-work) 0%, transparent 65%);
+}
+.tint-about {
+  background:
+    radial-gradient(80% 70% at 10% 20%, var(--color-tint-about) 0%, transparent 70%),
+    radial-gradient(50% 50% at 100% 90%, var(--color-tint-about) 0%, transparent 70%);
+}
+.tint-contact {
+  background:
+    radial-gradient(90% 70% at 50% 110%, var(--color-tint-contact) 0%, transparent 70%),
+    radial-gradient(50% 40% at 95% 5%, var(--color-tint-work) 0%, transparent 70%);
+}
+
 /* ------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -318,4 +394,12 @@ html.has-custom-cursor *:not(input, textarea, select, [contenteditable="true"]) 
     transition-duration: 0s !important;
     scroll-behavior: auto !important;
   }
+  .hero-blob {
+    animation: none !important;
+  }
+}
+
+/* The backdrop only animates while the hero is on screen (Hero toggles .is-live). */
+.hero-mesh:not(.is-live) .hero-blob {
+  animation-play-state: paused;
 }

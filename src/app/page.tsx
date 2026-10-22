@@ -3,6 +3,7 @@ import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Navigation from "@/components/Navigation";
+import { ScrollTint } from "@/components/motion";
 
 // Section ids (#home #projects #about #contact) live on the sections.
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <Projects />
         <About />
         <Contact />
+        <ScrollTint sections={{ projects: "work", about: "about", contact: "contact" }} />
       </main>
     </>
   );

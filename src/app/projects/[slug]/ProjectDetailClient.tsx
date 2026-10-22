@@ -228,7 +228,7 @@ export default function ProjectDetailClient({ project, next, index, total }: Pro
         {project.features && project.features.length > 0 && (
           <section aria-labelledby="features-heading" className="px-4 pb-24 sm:px-8 md:pb-36">
             <h2 id="features-heading" className="font-display text-display-md uppercase">
-              <SplitReveal text="Key features" />
+              <SplitReveal text="Key features" split="chars" scrub start="top 92%" scrubEnd="top 50%" />
             </h2>
             <RevealOnScroll as="ol" stagger={0.1} y={40} className="mt-10 border-b border-line md:mt-14">
               {project.features.map((feature, i) => (
@@ -254,7 +254,7 @@ export default function ProjectDetailClient({ project, next, index, total }: Pro
             </h2>
             {/* Decorative; the list below carries the content (and stays readable under reduced motion). */}
             <div aria-hidden="true" className="mt-6 border-y border-line py-4 md:py-6">
-              <Marquee speed={60} itemClassName="gap-8 pr-8 md:gap-12 md:pr-12">
+              <Marquee speed={60} skew={8} itemClassName="gap-8 pr-8 md:gap-12 md:pr-12">
                 {project.technologies.map((tech) => (
                   <span key={tech} className="flex items-center gap-8 md:gap-12">
                     <span className="whitespace-nowrap font-display text-display-lg uppercase">{tech}</span>

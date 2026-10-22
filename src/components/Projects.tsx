@@ -36,8 +36,12 @@ const GalleryCard = ({ project, index }: { project: Project; index: number }) =>
           scrim (.rail-scrim, globals.css) that keeps the index, category and copy readable,
           and zooms slightly on hover / keyboard focus. */}
       <div
+        data-media
         className="relative aspect-[16/10] overflow-hidden gallery:absolute gallery:inset-0 gallery:aspect-auto"
       >
+        {/* data-parallax: GSAP owns this wrapper's transform (scroll parallax); the
+            image keeps its own CSS hover zoom. */}
+        <div data-parallax className="h-full w-full">
         <Image
           src={project.image}
           alt=""
@@ -47,6 +51,7 @@ const GalleryCard = ({ project, index }: { project: Project; index: number }) =>
           sizes="(min-width: 1024px) 34vw, 100vw"
           className="h-full w-full object-cover transition-transform duration-1000 ease-out-expo gallery:scale-100 gallery:group-hover:scale-105 gallery:group-focus-visible:scale-105"
         />
+        </div>
         <div aria-hidden="true" className="rail-scrim absolute inset-0 hidden gallery:block" />
       </div>
 
@@ -91,6 +96,16 @@ const ProjectsGallery = () => {
     const mm = gsap.matchMedia();
     mm.add("(min-width: 64rem) and (prefers-reduced-motion: no-preference)", () => {
       const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const cards = gsap.utils.toArray<HTMLElement>("li[data-card]", track);
+      const count = section.querySelector<HTMLElement>(".gallery-count");
+      const total = cards.length - 1; // the last item is the "All projects" link
+      let shown = 1;
+
+      // Velocity lean: cards skew with the scroll speed and spring back at rest.
+      const lean = { v: 0 };
+      const setSkew = gsap.quickSetter(cards, "skewX", "deg");
+      const clampSkew = gsap.utils.clamp(-5, 5);
+
       const tween = gsap.to(track, {
         x: () => -distance(),
         ease: "none",
@@ -101,6 +116,24 @@ const ProjectsGallery = () => {
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const skew = clampSkew(self.getVelocity() / -400);
+            if (Math.abs(skew) > Math.abs(lean.v)) {
+              lean.v = skew;
+              gsap.to(lean, {
+                v: 0,
+                duration: 0.9,
+                ease: "power3.out",
+                overwrite: true,
+                onUpdate: () => setSkew(lean.v),
+              });
+            }
+            const n = Math.min(total, Math.round(self.progress * (total - 1)) + 1);
+            if (count && n !== shown) {
+              shown = n;
+              count.textContent = String(n).padStart(2, "0");
+            }
+          },
         },
       });
       gsap.fromTo(
@@ -108,10 +141,53 @@ const ProjectsGallery = () => {
         { scaleX: 0 },
         { scaleX: 1, ease: "none", scrollTrigger: { trigger: section, start: "top top", end: () => `+=${distance()}`, scrub: true } },
       );
+
+      // Per card, measured against the horizontal tween: the image wipes open
+      // left to right as the card slides in, and drifts inside its frame
+      // (inner parallax) the whole time it is on screen.
+      cards.slice(0, total).forEach((card) => {
+        const media = card.querySelector<HTMLElement>("[data-media]");
+        const inner = card.querySelector<HTMLElement>("[data-parallax]");
+        if (!media || !inner) return;
+        gsap.fromTo(
+          media,
+          { clipPath: "inset(0% 100% 0% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            ease: "power2.out",
+            scrollTrigger: { trigger: card, containerAnimation: tween, start: "left 98%", end: "left 62%", scrub: true },
+          },
+        );
+        gsap.fromTo(
+          inner,
+          { xPercent: 7, scale: 1.16 },
+          {
+            xPercent: -7,
+            scale: 1.16,
+            ease: "none",
+            scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "right left", scrub: true },
+          },
+        );
+      });
+
       stRef.current = tween.scrollTrigger ?? null;
       return () => {
         stRef.current = null;
+        if (count) count.textContent = "01";
       };
+    }, section);
+
+    // Stacked cards (tablet / phone, motion allowed): each image opens from an
+    // inset frame and settles from a slight zoom as it scrolls into view.
+    mm.add("(max-width: 63.99rem) and (prefers-reduced-motion: no-preference)", () => {
+      gsap.utils.toArray<HTMLElement>("li[data-card]", track).forEach((card) => {
+        const media = card.querySelector<HTMLElement>("[data-media]");
+        const inner = card.querySelector<HTMLElement>("[data-parallax]");
+        if (!media || !inner) return;
+        const scrollTrigger = { trigger: media, start: "top 98%", end: "top 55%", scrub: 0.5 };
+        gsap.fromTo(media, { clipPath: "inset(10% 8% 10% 8%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "none", scrollTrigger });
+        gsap.fromTo(inner, { scale: 1.2 }, { scale: 1, ease: "none", scrollTrigger: { ...scrollTrigger } });
+      });
     }, section);
 
     // Web fonts change card heights/widths; re-measure once they are in.
@@ -148,7 +224,7 @@ const ProjectsGallery = () => {
     >
       <div className="flex flex-col gap-4 px-5 md:flex-row md:items-end md:justify-between md:px-10">
         <h2 id="projects-title" className="font-display text-display-lg uppercase text-paper">
-          <SplitReveal text="Selected work" split="chars" stagger={0.03} />
+          <SplitReveal text="Selected work" split="chars" scrub start="top 95%" scrubEnd="top 40%" />
         </h2>
         <p className="max-w-sm text-sm leading-6 text-mute md:pb-3 md:text-right">
           Here are some of my recent works. Each project is a unique piece of development.
@@ -185,8 +261,14 @@ const ProjectsGallery = () => {
         </ul>
       </div>
 
-      <div aria-hidden="true" className="absolute inset-x-5 bottom-6 hidden h-px bg-line md:inset-x-10 gallery:block">
-        <div className="gallery-progress h-full origin-left scale-x-0 bg-accent" />
+      <div aria-hidden="true" className="absolute inset-x-5 bottom-6 hidden items-center gap-5 md:inset-x-10 gallery:flex">
+        <span className="text-xs font-medium tabular-nums tracking-[0.2em] text-paper">
+          <span className="gallery-count">01</span>
+          <span className="text-mute"> / {String(allProjects.length).padStart(2, "0")}</span>
+        </span>
+        <span className="relative h-px flex-1 bg-line">
+          <span className="gallery-progress absolute inset-0 origin-left scale-x-0 bg-accent" />
+        </span>
       </div>
     </section>
   );

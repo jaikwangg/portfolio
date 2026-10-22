@@ -14,6 +14,8 @@ export interface MarqueeProps {
   velocityFactor?: number;
   /** Flip direction while the user scrolls up. Default true. */
   reverseOnScrollUp?: boolean;
+  /** Max skew in degrees while the page scrolls fast (leans with the scroll). 0 disables. Default 0. */
+  skew?: number;
   /** Copies of the content in the track; raise it if one copy is narrow. Default 4. */
   repeat?: number;
   className?: string;
@@ -23,7 +25,7 @@ export interface MarqueeProps {
 
 /**
  * Infinite horizontal marquee. Speeds up with Lenis scroll velocity and can
- * reverse on scroll-up. Only the first copy is exposed to assistive tech.
+ * reverse on scroll-up, and (skew > 0) leans into fast scrolling. Only the first copy is exposed to assistive tech.
  * Static under reduced motion (CSS hides overflow; nothing moves), paused
  * while offscreen.
  */
@@ -33,6 +35,7 @@ export default function Marquee({
   direction = 1,
   velocityFactor = 0.15,
   reverseOnScrollUp = true,
+  skew = 0,
   repeat = 4,
   className,
   itemClassName,
@@ -55,6 +58,7 @@ export default function Marquee({
     let dir: number = direction;
     let width = (track.firstElementChild as HTMLElement | null)?.offsetWidth ?? 0;
     let visible = true;
+    let lean = 0;
 
     const ro = new ResizeObserver(() => {
       width = (track.firstElementChild as HTMLElement | null)?.offsetWidth ?? 0;
@@ -72,7 +76,14 @@ export default function Marquee({
       const boost = 1 + Math.abs(v) * velocityFactor;
       x -= speed * boost * dir * (deltaMs / 1000);
       x = ((x % width) - width) % width; // keep in (-width, 0]
-      track.style.transform = `translate3d(${x}px,0,0)`;
+      let t = `translate3d(${x}px,0,0)`;
+      if (skew) {
+        // Ease towards a skew proportional to velocity; settles back to 0 at rest.
+        const goal = Math.max(-skew, Math.min(skew, -v * 0.35));
+        lean += (goal - lean) * Math.min(1, deltaMs / 120);
+        if (Math.abs(lean) > 0.01) t += ` skewX(${lean.toFixed(2)}deg)`;
+      }
+      track.style.transform = t;
     };
     gsap.ticker.add(tick);
     return () => {
@@ -81,7 +92,7 @@ export default function Marquee({
       io.disconnect();
       track.style.transform = "";
     };
-  }, [speed, direction, velocityFactor, reverseOnScrollUp]);
+  }, [speed, direction, velocityFactor, reverseOnScrollUp, skew]);
 
   return (
     <div ref={rootRef} className={["marquee", className].filter(Boolean).join(" ")}>
