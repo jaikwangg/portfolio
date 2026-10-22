@@ -1,13 +1,18 @@
+import type { Metadata } from "next";
 import Projects from "@/components/Projects";
+import Contact from "@/components/Contact";
 import Navigation from "@/components/Navigation";
+
+export const metadata: Metadata = { title: "Projects | Jaikwang" };
 
 export default function ProjectsPage() {
   return (
-    <main>
+    <>
       <Navigation />
-      <div className="pt-20 md:pt-24">
-        <Projects />
-      </div>
-    </main>
+      <main className="overflow-x-clip">
+        <Projects variant="index" />
+        <Contact />
+      </main>
+    </>
   );
-} 
+}

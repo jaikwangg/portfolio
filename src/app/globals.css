@@ -4,6 +4,13 @@
    (set statically in layout.tsx), not the OS colour-scheme setting. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Phase B layout switches (CSS-only, so server HTML already has the right
+   layout and nothing shifts on hydration):
+   gallery      desktop + motion allowed -> pinned horizontal projects rail
+   hover-motion precise pointer + motion allowed -> hover image previews */
+@custom-variant gallery (@media (min-width: 64rem) and (prefers-reduced-motion: no-preference));
+@custom-variant hover-motion (@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference));
+
 /* ---------------------------------------------------------------------------
    Design tokens -> Tailwind utilities
    bg-ink / bg-ink-2 / bg-ink-3, text-paper, text-mute, border-line,
@@ -219,6 +226,35 @@ html.has-custom-cursor *:not(input, textarea, select, [contenteditable="true"]) 
   font-size: var(--text-display-lg);
   line-height: 1;
   text-transform: uppercase;
+}
+
+/* Outlined display text (footer marquee, hero accents). */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-paper);
+}
+
+/* Hero scroll cue: a line that drips downward. */
+@keyframes cue-drip {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+.scroll-cue-line {
+  animation: cue-drip 2.2s var(--ease-in-out-expo) infinite;
 }
 
 /* ------------------------------------------------- reduced motion */

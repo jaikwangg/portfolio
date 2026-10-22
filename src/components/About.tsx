@@ -1,30 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { gsap } from "@/lib/gsap";
+import { useIsomorphicLayoutEffect } from "@/lib/hooks";
+import { RevealOnScroll } from "@/components/motion";
 
-const smoothEase = [0.22, 1, 0.36, 1] as const;
-
-const sectionVariants = {
-  hidden: { opacity: 0, y: 28 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: smoothEase,
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, ease: smoothEase },
-  },
-};
+const statement = "I like building products that are clear, reliable, and pleasant to use.";
+const emphasis = new Set(["clear,", "reliable,", "pleasant"]);
 
 const capabilities = [
   {
@@ -45,101 +27,123 @@ const capabilities = [
 ];
 
 const techStack = [
-  {
-    name: "React / Next.js",
-    note: "For fast product sites, dashboards, and modern app flows with good structure.",
-  },
-  {
-    name: "TypeScript",
-    note: "For safer codebases, clearer contracts, and easier long-term maintenance.",
-  },
-  {
-    name: "Node.js",
-    note: "For backend logic, integrations, and APIs that support real product workflows.",
-  },
+  { name: "React / Next.js", note: "For fast product sites, dashboards, and modern app flows with good structure." },
+  { name: "TypeScript", note: "For safer codebases, clearer contracts, and easier long-term maintenance." },
+  { name: "Node.js", note: "For backend logic, integrations, and APIs that support real product workflows." },
   {
     name: "PostgreSQL / MongoDB",
     note: "For structured and document-driven data models depending on the project needs.",
   },
 ];
 
+const facts = [
+  { label: "Based in", value: "Bangkok, Thailand" },
+  { label: "Focus", value: "Product websites and full-stack apps" },
+  { label: "Working style", value: "Clean UI, solid UX, reliable delivery" },
+];
+
 const About = () => {
+  const pinRef = useRef<HTMLDivElement>(null);
+
+  // The statement lights up word by word as you scroll. Pinned on md+,
+  // plain scrubbed reveal on small screens, fully static under reduced motion.
+  useIsomorphicLayoutEffect(() => {
+    const el = pinRef.current;
+    if (!el) return;
+    const mm = gsap.matchMedia();
+    mm.add(
+      {
+        wide: "(min-width: 48rem) and (prefers-reduced-motion: no-preference)",
+        narrow: "(max-width: 47.99rem) and (prefers-reduced-motion: no-preference)",
+      },
+      (ctx) => {
+        const wide = Boolean(ctx.conditions?.wide);
+        const words = gsap.utils.toArray<HTMLElement>(".about-word", el);
+        const tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: wide
+            ? { trigger: el, start: "top top", end: "+=140%", pin: true, scrub: 0.6 }
+            : { trigger: el, start: "top 75%", end: "bottom 60%", scrub: 0.6 },
+        });
+        tl.fromTo(words, { opacity: 0.14 }, { opacity: 1, stagger: 0.5, duration: 1 });
+        tl.from(".about-sub", { autoAlpha: 0, y: 24, duration: 2 }, ">-1");
+      },
+      el,
+    );
+    return () => mm.revert();
+  }, []);
+
+  const words = statement.split(" ");
+
   return (
-    <section id="about" className="relative px-4 py-18 sm:py-20 md:py-24">
-      <div className="container mx-auto max-w-6xl">
-        <motion.div
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div variants={itemVariants} className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600 dark:text-blue-300 sm:text-sm">
-              About
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 sm:mt-4 sm:text-4xl md:text-5xl">
-              I like building products that are clear, reliable, and pleasant to use.
-            </h2>
-            <p className="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300 sm:mt-6 sm:text-lg sm:leading-8">
-              My work sits between product thinking, interface design, and engineering. I enjoy
-              turning ideas into experiences that look intentional, feel smooth, and hold up in
-              real use.
-            </p>
-          </motion.div>
+    <section id="about" aria-labelledby="about-title" className="relative">
+      <div
+        ref={pinRef}
+        className="flex flex-col justify-center px-5 py-24 md:min-h-[100svh] md:px-10 md:py-28"
+      >
+        <p className="mb-8 flex items-center gap-4 text-xs font-medium uppercase tracking-[0.22em] text-mute md:mb-12 md:text-sm">
+          <span className="h-px w-10 bg-accent" aria-hidden="true" />
+          About
+        </p>
+        <h2 id="about-title" className="max-w-[16ch] font-display text-display-lg uppercase text-paper">
+          {words.map((w, i) => (
+            <span key={i}>
+              <span className={`about-word inline-block ${emphasis.has(w) ? "text-accent" : ""}`}>{w}</span>
+              {i < words.length - 1 ? " " : null}
+            </span>
+          ))}
+        </h2>
+        <p className="about-sub mt-8 max-w-2xl text-base leading-7 text-mute md:mt-12 md:text-lg md:leading-8">
+          My work sits between product thinking, interface design, and engineering. I enjoy turning
+          ideas into experiences that look intentional, feel smooth, and hold up in real use.
+        </p>
+      </div>
 
-          <div className="mt-10 grid gap-5 sm:mt-12 sm:gap-6 lg:mt-16 lg:gap-8 lg:grid-cols-[1fr_1.1fr]">
-            <motion.div
-              variants={itemVariants}
-              className="rounded-[1.6rem] border border-slate-200/80 bg-white/75 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/50 sm:rounded-[2rem] sm:p-8"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400 sm:text-sm">
-                Working approach
-              </p>
-              <div className="mt-6 space-y-6 sm:mt-8 sm:space-y-8">
-                {capabilities.map((item) => (
-                  <div key={item.title} className="border-b border-slate-200 pb-6 last:border-b-0 last:pb-0 dark:border-slate-800">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 sm:text-xl">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2.5 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:mt-3 sm:text-base">
-                      {item.description}
-                    </p>
+      <div className="border-t border-line px-5 py-20 md:px-10 md:py-28">
+        <RevealOnScroll as="dl" stagger={0.08} y={24} className="grid gap-6 border-b border-line pb-12 sm:grid-cols-3 md:pb-16">
+          {facts.map((f) => (
+            <div key={f.label}>
+              <dt className="text-xs font-medium uppercase tracking-[0.2em] text-mute">{f.label}</dt>
+              <dd className="mt-2 text-lg leading-7 text-paper md:text-xl">{f.value}</dd>
+            </div>
+          ))}
+        </RevealOnScroll>
+
+        <div className="mt-12 grid gap-14 md:mt-16 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <h3 className="text-xs font-medium uppercase tracking-[0.22em] text-accent md:text-sm">Working approach</h3>
+            <RevealOnScroll as="ol" stagger={0.1} y={32} className="mt-6">
+              {capabilities.map((c, i) => (
+                <li key={c.title} className="grid grid-cols-[3rem_1fr] gap-x-2 border-b border-line py-6 first:border-t">
+                  <span className="pt-1 text-xs tabular-nums text-mute">{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    <p className="font-display text-display-sm uppercase text-paper">{c.title}</p>
+                    <p className="mt-3 text-sm leading-7 text-mute md:text-base">{c.description}</p>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="rounded-[1.6rem] border border-slate-200/80 bg-slate-950 p-5 text-slate-50 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.5)] dark:border-slate-800 sm:rounded-[2rem] sm:p-8"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-300 sm:text-sm">
-                Core stack
-              </p>
-              <div className="mt-6 space-y-4 sm:mt-8 sm:space-y-5">
-                {techStack.map((item) => (
-                  <div
-                    key={item.name}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5"
-                  >
-                    <h3 className="text-lg font-semibold text-white sm:text-xl">{item.name}</h3>
-                    <p className="mt-2 text-sm leading-7 text-slate-300">{item.note}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 rounded-2xl border border-blue-400/20 bg-blue-400/10 p-4 sm:mt-8 sm:p-5">
-                <p className="text-xs font-medium uppercase tracking-[0.18em] text-blue-200 sm:text-sm">
-                  What I aim to deliver
-                </p>
-                <p className="mt-3 text-sm leading-7 text-slate-200">
-                  A product that not only looks good in screenshots, but also feels dependable for
-                  the people who use it every day.
-                </p>
-              </div>
-            </motion.div>
+                </li>
+              ))}
+            </RevealOnScroll>
           </div>
-        </motion.div>
+
+          <div>
+            <h3 className="text-xs font-medium uppercase tracking-[0.22em] text-accent md:text-sm">Core stack</h3>
+            <RevealOnScroll as="ul" stagger={0.1} y={32} className="mt-6">
+              {techStack.map((t) => (
+                <li key={t.name} className="flex flex-col gap-2 border-b border-line py-6 first:border-t sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+                  <p className="shrink-0 text-lg font-semibold text-paper md:text-xl">{t.name}</p>
+                  <p className="max-w-sm text-sm leading-7 text-mute sm:text-right">{t.note}</p>
+                </li>
+              ))}
+            </RevealOnScroll>
+            <div className="mt-10 bg-accent-soft p-6 md:p-8">
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">What I aim to deliver</p>
+              <p className="mt-3 text-base leading-7 text-paper">
+                A product that not only looks good in screenshots, but also feels dependable for the
+                people who use it every day.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

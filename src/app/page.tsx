@@ -1,26 +1,20 @@
-// import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Navigation from "@/components/Navigation";
 
+// Section ids (#home #projects #about #contact) live on the sections.
 export default function Home() {
   return (
-    <main className="overflow-x-hidden">
+    <>
       <Navigation />
-      <div id="home">
+      <main className="overflow-x-clip">
         <Hero />
-      </div>
-      <div id="projects">
         <Projects />
-      </div>
-      <div id="about">
         <About />
-      </div>
-      <div id="contact">
         <Contact />
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
