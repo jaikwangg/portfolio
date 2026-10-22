@@ -3,9 +3,9 @@ import Navigation from "@/components/Navigation";
 
 export default function ContactPage() {
   return (
-    <main className="hidden md:block">
+    <main>
       <Navigation />
-      <div className="pt-16">
+      <div className="pt-20 md:pt-24">
         <Contact />
       </div>
     </main>

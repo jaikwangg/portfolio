@@ -1,46 +1,67 @@
 @import "tailwindcss";
 
+/* Dark-first site: `dark:` utilities follow the .dark class on <html>
+   (set statically in layout.tsx), not the OS colour-scheme setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens -> Tailwind utilities
+   bg-ink / bg-ink-2 / bg-ink-3, text-paper, text-mute, border-line,
+   text-accent / bg-accent, font-display / font-sans,
+   text-display-2xl ... text-display-sm, ease-out-expo / ease-in-out-expo
+   ------------------------------------------------------------------------ */
 @theme {
-  --color-scheme: light dark;
+  --color-ink: #0e0e0c;
+  --color-ink-2: #171714;
+  --color-ink-3: #24241f;
+  --color-paper: #f2efe6;
+  --color-mute: #a29e92;
+  --color-line: rgb(242 239 230 / 0.14);
+  --color-accent: #ff5a1f;
+  --color-accent-soft: rgb(255 90 31 / 0.16);
+  --color-on-accent: #0e0e0c;
+
+  --font-display: var(--font-anton), "Arial Narrow", "Helvetica Neue", sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid display scale (min, viewport-relative, max). */
+  --text-display-2xl: clamp(4.5rem, 19vw, 20rem);
+  --text-display-2xl--line-height: 0.82;
+  --text-display-2xl--letter-spacing: -0.01em;
+  --text-display-xl: clamp(3.5rem, 13vw, 13rem);
+  --text-display-xl--line-height: 0.85;
+  --text-display-xl--letter-spacing: -0.01em;
+  --text-display-lg: clamp(2.75rem, 9vw, 8rem);
+  --text-display-lg--line-height: 0.9;
+  --text-display-md: clamp(2.25rem, 5.5vw, 4.75rem);
+  --text-display-md--line-height: 0.95;
+  --text-display-sm: clamp(1.75rem, 3.4vw, 2.75rem);
+  --text-display-sm--line-height: 1;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
+/* --------------------------------------------------------------- base */
 :root {
-  color-scheme: light;
-  --foreground-rgb: 15, 23, 42;
-  --background-rgb: 246, 249, 252;
-  --surface-rgb: 255, 255, 255;
-  --border-rgb: 226, 232, 240;
-  --accent-blue: #2563eb;
-  --accent-sky: #0ea5e9;
-}
-
-:root.dark {
   color-scheme: dark;
-  --foreground-rgb: 241, 245, 249;
-  --background-rgb: 2, 6, 23;
-  --surface-rgb: 15, 23, 42;
-  --border-rgb: 30, 41, 59;
+  /* Kept for existing components that read these. */
+  --foreground-rgb: 242, 239, 230;
+  --background-rgb: 14, 14, 12;
+  --surface-rgb: 23, 23, 20;
+  --border-rgb: 36, 36, 31;
   --accent-blue: #60a5fa;
   --accent-sky: #38bdf8;
 }
 
 html {
-  scroll-behavior: smooth;
-  background:
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.09), transparent 30%),
-    linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
-}
-
-html.dark {
-  background:
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 28%),
-    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  background: var(--color-ink);
 }
 
 body {
   min-height: 100vh;
-  color: rgb(var(--foreground-rgb));
-  background: transparent;
+  background: var(--color-ink);
+  color: var(--color-paper);
   text-rendering: optimizeLegibility;
 }
 
@@ -50,100 +71,190 @@ body {
   box-sizing: border-box;
 }
 
-* {
-  transition-property: color, background-color, border-color, box-shadow, transform;
-  transition-duration: 180ms;
-  transition-timing-function: ease;
-}
-
 ::selection {
-  background: rgba(37, 99, 235, 0.18);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
-.dark ::selection {
-  background: rgba(96, 165, 250, 0.22);
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-*:focus-visible {
-  outline: 2px solid rgba(37, 99, 235, 0.4);
-  outline-offset: 2px;
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+  transform: translateY(-200%);
 }
-
-.dark *:focus-visible {
-  outline-color: rgba(96, 165, 250, 0.45);
+.skip-link:focus-visible {
+  transform: none;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: rgba(226, 232, 240, 0.65);
+  background: var(--color-ink);
 }
-
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background: rgba(100, 116, 139, 0.55);
+  background: var(--color-ink-3);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 0.75);
+  background: var(--color-mute);
 }
 
-.dark ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.75);
+/* -------------------------------------------------- motion primitives */
+
+/* SplitReveal: each token sits in an overflow mask. */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders without changing line box */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.split-token {
+  display: inline-block;
+  will-change: transform;
+}
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+/* trigger="load": CSS-only rise on first paint (no JS, LCP-safe). */
+.split-load .split-token {
+  animation: split-rise var(--split-duration, 0.9s) var(--ease-out-expo) both;
+  animation-delay: calc(var(--split-delay, 0s) + var(--i, 0) * var(--split-stagger, 0.06s));
+}
+@keyframes split-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.5);
+/* Marquee */
+.marquee {
+  overflow: hidden;
+  width: 100%;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.marquee-item {
+  flex: none;
+  display: flex;
+  align-items: center;
 }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.65);
+/* Custom cursor (only mounted for fine pointers without reduced motion). */
+html.has-custom-cursor,
+html.has-custom-cursor *:not(input, textarea, select, [contenteditable="true"]) {
+  cursor: none;
+}
+.cursor-layer {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+}
+.cursor-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-paper);
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 16px 40px -28px rgba(15, 23, 42, 0.35);
+/* Page transition curtain */
+.page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  visibility: hidden; /* GSAP owns the transform (yPercent) */
+  pointer-events: none;
+}
+.page-curtain-mark {
+  font-family: var(--font-display);
+  font-size: var(--text-display-lg);
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.dark .glass {
-  background: rgba(15, 23, 42, 0.72);
-  border-color: rgba(51, 65, 85, 0.9);
-  box-shadow: 0 18px 48px -32px rgba(2, 6, 23, 0.7);
+/* ------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
 }
 
+/* ------------------------------------------------------------------
+   Legacy utilities used by the current Hero/Projects/About/Contact.
+   Re-tinted to the new palette; remove once phase B replaces them.
+   --------------------------------------------------------------- */
+.glass,
 .glass-card {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgb(23 23 20 / 0.72);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: 0 18px 50px -32px rgba(15, 23, 42, 0.25);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 20px 52px -34px rgb(0 0 0 / 0.7);
 }
 
-.dark .glass-card {
-  background: rgba(15, 23, 42, 0.62);
-  border-color: rgba(51, 65, 85, 0.9);
-  box-shadow: 0 20px 52px -34px rgba(2, 6, 23, 0.7);
-}
-
-.glow-blue {
-  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.08), 0 20px 60px -32px rgba(37, 99, 235, 0.45);
-}
-
+.glow-blue,
 .glow-sky {
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.08), 0 20px 60px -32px rgba(14, 165, 233, 0.4);
+  box-shadow: 0 0 0 1px rgb(255 90 31 / 0.08), 0 20px 60px -32px rgb(255 90 31 / 0.35);
 }
 
-.neon-blue {
-  text-shadow: 0 10px 24px rgba(37, 99, 235, 0.2);
-}
-
+.neon-blue,
 .neon-sky {
-  text-shadow: 0 10px 24px rgba(14, 165, 233, 0.2);
+  text-shadow: 0 10px 24px rgb(255 90 31 / 0.2);
 }
 
 @keyframes float {
@@ -178,20 +289,12 @@ body {
   .animation-delay-2000 {
     animation-delay: 2s;
   }
-
   .animation-delay-4000 {
     animation-delay: 4s;
   }
-
-  .text-neon-blue {
-    color: var(--accent-blue);
-  }
-
-  .text-neon-sky {
-    color: var(--accent-sky);
-  }
-
+  .text-neon-blue,
+  .text-neon-sky,
   .text-accent-blue {
-    color: var(--accent-blue);
+    color: var(--color-accent);
   }
 }

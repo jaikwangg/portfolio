@@ -1,175 +1,266 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-// import ThemeToggle from "./ThemeToggle";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { gsap } from "@/lib/gsap";
+import { prefersReducedMotion, useIsomorphicLayoutEffect } from "@/lib/hooks";
+import MagneticButton from "@/components/motion/MagneticButton";
+import { useLenis } from "@/components/motion/SmoothScroll";
 
+const navItems = [
+  { name: "Home", path: "/", id: "home" },
+  { name: "Projects", path: "/projects", id: "projects" },
+  { name: "About", path: "/about", id: "about" },
+  { name: "Contact", path: "/contact", id: "contact" },
+];
+
+// Same links the Contact section already shows.
+const socials = [
+  { name: "GitHub", href: "https://github.com/jaikwangg" },
+  { name: "Instagram", href: "https://instagram.com/Worajai_" },
+  { name: "Email", href: "mailto:Worakij.W@gmail.com" },
+];
+
+const strip = (p: string) => (p.length > 1 ? p.replace(/\/+$/, "") : p);
+
+/**
+ * Minimal fixed top bar (logo + menu button) with a full-screen overlay menu.
+ * On the home page, Projects/About/Contact scroll to their sections; on other
+ * pages they navigate to the routes (with the page transition).
+ */
 const Navigation = () => {
-  const pathname = usePathname();
-//   const [isMobile, setIsMobile] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = strip(usePathname() || "/");
+  const isHome = pathname === "/";
+  const lenis = useLenis();
+  const [open, setOpen] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const pendingScroll = useRef<string | null>(null);
 
-  const { scrollY } = useScroll();
-  const headerHeight = useTransform(scrollY, [0, 100], [64, 54]);
-  // const headerOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95]);
-  // const headerBlur = useTransform(scrollY, [0, 100], [8, 12]);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      // setIsMobile(window.innerWidth < 768);
-    };
-    
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      window.removeEventListener('scroll', handleScroll);
-    };
+  // Build the open/close timeline once.
+  useIsomorphicLayoutEffect(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+    const ctx = gsap.context(() => {
+      gsap.set(overlay, { autoAlpha: 0, clipPath: "inset(0% 0% 100% 0%)" });
+      tlRef.current = gsap
+        .timeline({ paused: true })
+        .to(overlay, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, ease: "expo.inOut" }, 0)
+        .from(".menu-link-inner", { yPercent: 110, duration: 0.9, ease: "expo.out", stagger: 0.07 }, 0.35)
+        .from(".menu-foot", { autoAlpha: 0, y: 20, duration: 0.6, ease: "power3.out" }, 0.6);
+    }, overlay);
+    return () => ctx.revert();
   }, []);
 
-  const navItems = [
-    { name: "Home", path: "/", id: "home" },
-    { name: "Projects", path: "/projects", id: "projects" },
-    { name: "About", path: "/about", id: "about" },
-    { name: "Contact", path: "/contact", id: "contact" },
-  ];
+  const close = useCallback(() => setOpen(false), []);
 
-  const handleMobileNavClick = (id: string) => {
-    setIsMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  // Play / reverse, lock scroll, manage focus.
+  useEffect(() => {
+    const tl = tlRef.current;
+    const overlay = overlayRef.current;
+    if (!tl || !overlay) return;
+    const reduced = prefersReducedMotion();
+
+    if (open) {
+      lenis?.stop();
+      document.documentElement.style.overflow = "hidden";
+      tl.eventCallback("onReverseComplete", null);
+      tl.timeScale(1);
+      gsap.set(overlay, { autoAlpha: 1 }); // visible (and focusable) right away
+      if (reduced) tl.progress(1);
+      else tl.play();
+      requestAnimationFrame(() => overlay.querySelector<HTMLElement>("a[href]")?.focus());
+    } else if (tl.progress() > 0) {
+      const finish = () => {
+        gsap.set(overlay, { autoAlpha: 0 });
+        lenis?.start();
+        document.documentElement.style.overflow = "";
+        const id = pendingScroll.current;
+        pendingScroll.current = null;
+        if (!id) return;
+        const target = id === "home" ? 0 : document.getElementById(id);
+        if (lenis && target !== null) lenis.scrollTo(target);
+        else if (target === 0) window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+        else target?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+      };
+      if (reduced) {
+        tl.progress(0);
+        finish();
+      } else {
+        tl.eventCallback("onReverseComplete", () => {
+          tl.eventCallback("onReverseComplete", null);
+          finish();
+        });
+        tl.timeScale(1.6).reverse();
+      }
+      buttonRef.current?.focus();
     }
+  }, [open, lenis]);
+
+  // Restore scroll if unmounted while open (route change from the menu).
+  useEffect(
+    () => () => {
+      lenis?.start();
+      document.documentElement.style.overflow = "";
+    },
+    [lenis],
+  );
+
+  // Escape closes; Tab cycles between the menu button and the menu items.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+        return;
+      }
+      if (e.key !== "Tab" || !overlayRef.current || !buttonRef.current) return;
+      const items = [buttonRef.current, ...overlayRef.current.querySelectorAll<HTMLElement>("a[href], button")];
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!items.includes(document.activeElement as HTMLElement)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, close]);
+
+  const onItemClick = (e: React.MouseEvent, item: (typeof navItems)[number]) => {
+    if (isHome) {
+      // Stay on the page: scroll to the section once the menu has closed.
+      e.preventDefault();
+      pendingScroll.current = item.id;
+      close();
+    } else if (strip(item.path) === pathname) {
+      e.preventDefault();
+      close();
+    }
+    // Otherwise let the link navigate (PageTransition covers the swap).
+  };
+
+  const onLogoClick = (e: React.MouseEvent) => {
+    if (!isHome) return;
+    e.preventDefault();
+    if (open) {
+      pendingScroll.current = "home";
+      close();
+    } else if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   };
 
   return (
-    <motion.nav
-      style={{
-        height: headerHeight,
-      }}
-      className={`fixed left-3 right-3 top-3 z-50 rounded-[1.25rem] glass transition-all duration-300 md:left-4 md:right-4 md:top-4 md:rounded-2xl ${
-        isScrolled ? "shadow-xl glow-blue" : "shadow-lg"
-      }`}
-    >
-      <div className="container mx-auto h-full px-4 md:px-6">
-        <div className="flex items-center justify-between h-full">
-          <Link 
-            href="/" 
-            className="relative text-base font-bold group md:text-xl"
-          >
-            <span className="relative z-10 bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">JK</span>
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-sky-500/20 rounded-lg -z-10 blur-sm"
-              initial={false}
-              animate={{ scale: isScrolled ? 1 : 1.1 }}
-              transition={{ duration: 0.3 }}
-            />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden items-center space-x-3 md:flex lg:space-x-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 lg:px-4 ${
-                  pathname === item.path 
-                    ? "text-blue-600 dark:text-blue-400" 
-                    : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
-                }`}
-              >
-                {item.name}
-                {pathname === item.path && (
-                  <motion.div
-                    layoutId="underline"
-                    className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-sky-500/20 rounded-lg -z-10"
-                  />
-                )}
-                <motion.span
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-sky-500/10 rounded-lg -z-10 scale-0 group-hover:scale-100 transition-transform duration-300"
-                  initial={false}
-                />
-              </Link>
-            ))}
-            
-            {/* Theme Toggle */}
-            {/* <div className="ml-4">
-              <ThemeToggle />
-            </div> */}
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="flex items-center space-x-2 md:hidden">
-            {/* Theme Toggle for Mobile */}
-            {/* <ThemeToggle /> */}
-            
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="rounded-xl p-2 glass-card transition-colors duration-300 hover:bg-blue-500/10"
-              aria-label="Toggle menu"
+    <>
+      <header className="site-header fixed inset-x-0 top-0 z-[60]">
+        <nav aria-label="Primary" className="flex items-center justify-between px-5 py-4 md:px-10 md:py-6">
+          <MagneticButton strength={0.25}>
+            <Link
+              href="/"
+              onClick={onLogoClick}
+              data-no-transition={isHome ? "" : undefined}
+              className="font-display text-2xl uppercase tracking-tight text-paper md:text-3xl"
+              aria-label="Jaikwang, home"
             >
-              <svg
-                className="w-6 h-6 text-slate-700 dark:text-slate-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                />
-              </svg>
-            </button>
+              JK<span className="text-accent">.</span>
+            </Link>
+          </MagneticButton>
 
-            {/* Mobile Menu */}
-            {isMenuOpen && (
-              <>
-                {/* Backdrop overlay */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40 -mt-4 -ml-4 -mr-4"
+          <MagneticButton>
+            <button
+              ref={buttonRef}
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="site-menu"
+              className="menu-button flex items-center gap-3 rounded-full border border-line bg-ink/60 px-5 py-2.5 text-xs font-medium uppercase tracking-[0.2em] text-paper backdrop-blur-md transition-colors hover:border-accent hover:text-accent md:text-sm"
+            >
+              <span>{open ? "Close" : "Menu"}</span>
+              <span aria-hidden="true" className="relative block h-2.5 w-5">
+                <span
+                  className={`absolute left-0 h-px w-full bg-current transition-all duration-500 ease-out-expo ${
+                    open ? "top-1/2 rotate-45" : "top-0"
+                  }`}
                 />
-                
-                {/* Menu */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="absolute top-full left-0 right-0 z-50 mt-2 overflow-hidden rounded-[1.4rem] border border-blue-500/20 bg-white/92 shadow-2xl backdrop-blur-xl dark:border-blue-400/20 dark:bg-slate-900/94"
+                <span
+                  className={`absolute left-0 h-px w-full bg-current transition-all duration-500 ease-out-expo ${
+                    open ? "top-1/2 -rotate-45" : "top-full"
+                  }`}
+                />
+              </span>
+            </button>
+          </MagneticButton>
+        </nav>
+      </header>
+
+      <div
+        ref={overlayRef}
+        id="site-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        className="menu-overlay fixed inset-0 z-[55] flex flex-col justify-between overflow-y-auto bg-ink-2 px-5 pb-8 pt-24 md:px-10 md:pb-10 md:pt-32"
+        style={{ visibility: "hidden" }}
+        data-lenis-prevent
+      >
+        <ul className="flex flex-col">
+          {navItems.map((item, i) => {
+            const current = isHome ? item.id === "home" : strip(item.path) === pathname;
+            return (
+              <li key={item.id} className="border-b border-line first:border-t">
+                <Link
+                  href={isHome && item.id !== "home" ? `/#${item.id}` : item.path}
+                  onClick={(e) => onItemClick(e, item)}
+                  data-no-transition={isHome ? "" : undefined}
+                  aria-current={current ? "page" : undefined}
+                  className="menu-link group flex items-baseline gap-4 py-2 md:gap-8"
                 >
-                  <div className="container mx-auto px-3 py-3">
-                    {navItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => handleMobileNavClick(item.id)}
-                        className="block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-800 transition-all duration-300 hover:bg-blue-500/10 hover:text-blue-600 dark:text-slate-200 dark:hover:bg-blue-500/10 dark:hover:text-blue-400"
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              </>
-            )}
-          </div>
+                  <span className="w-8 shrink-0 text-xs tabular-nums text-mute md:text-sm">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="block overflow-hidden pb-[0.06em]">
+                    <span
+                      className={`menu-link-inner block font-display text-display-lg uppercase transition-colors duration-300 group-hover:text-accent ${
+                        current ? "text-accent" : "text-paper"
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="menu-foot mt-10 flex flex-col gap-4 text-sm text-mute md:flex-row md:items-end md:justify-between">
+          <p>Ladkrabang, Bangkok, Thailand</p>
+          <ul className="flex flex-wrap gap-6">
+            {socials.map((s) => (
+              <li key={s.name}>
+                <a
+                  href={s.href}
+                  {...(s.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="uppercase tracking-[0.18em] text-paper transition-colors hover:text-accent"
+                >
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </motion.nav>
+    </>
   );
 };
 
-export default Navigation; 
+export default Navigation;

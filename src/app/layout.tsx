@@ -1,13 +1,33 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Anton, Inter } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import Providers from "../components/Providers";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import PageTransition from "@/components/motion/PageTransition";
+import CustomCursor from "@/components/motion/CustomCursor";
 
-const inter = Inter({ subsets: ["latin"] });
+const display = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-anton",
+});
+
+const sans = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Jaikwang",
   description: "Full Stack Developer & UI/UX Designer",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0e0e0c",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -16,12 +36,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased transition-colors duration-300`}>
+    <html lang="en" className={`dark ${display.variable} ${sans.variable}`} suppressHydrationWarning>
+      <body className="bg-ink font-sans text-paper antialiased">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <Providers>
-          <div className="min-h-screen">
-            {children}
-          </div>
+          <SmoothScroll>
+            <PageTransition>
+              <div id="main-content" className="min-h-screen">
+                {children}
+              </div>
+            </PageTransition>
+            <CustomCursor />
+          </SmoothScroll>
         </Providers>
       </body>
     </html>
