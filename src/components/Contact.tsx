@@ -26,67 +26,6 @@ const itemVariants = {
 };
 
 const Contact = () => {
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   email: "",
-  //   message: "",
-  // });
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [submitStatus, setSubmitStatus] = useState<{
-  //   type: 'success' | 'error' | null;
-  //   message: string;
-  // }>({ type: null, message: '' });
-  // const [useOAuth2, setUseOAuth2] = useState(true); // Toggle between OAuth2 and App Password
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-  //   setSubmitStatus({ type: null, message: '' });
-
-    // try {
-    //   // Choose API endpoint based on toggle
-    //   const endpoint = useOAuth2 ? '/api/send-email' : '/api/send-email-simple';
-      
-    //   const response = await fetch(endpoint, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-
-    //   const data = await response.json();
-
-    //   if (response.ok) {
-    //     setSubmitStatus({
-    //       type: 'success',
-    //       message: 'Thank you! Your message has been sent successfully.'
-    //     });
-    //     // Reset form
-    //     setFormData({ name: "", email: "", message: "" });
-    //   } else {
-    //     setSubmitStatus({
-    //       type: 'error',
-    //       message: data.error || 'Failed to send message. Please try again.'
-    //     });
-    //   }
-    // } catch (error) {
-    //   setSubmitStatus({
-    //     type: 'error',
-    //     message: 'Network error. Please check your connection and try again.'
-    //   });
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
-  // };
-
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // };
-
   return (
     <section id="contact" className="relative px-4 py-18 sm:py-20 md:py-24">
       <div className="container mx-auto max-w-6xl px-4">
@@ -134,7 +73,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-800 dark:text-slate-100 mb-1">Email</h4>
-                    <p className="text-slate-600 dark:text-slate-400">Worakij.W@gmail.com</p>
+                    <a href="mailto:Worakij.W@gmail.com" className="text-slate-600 underline-offset-4 hover:text-accent hover:underline dark:text-slate-400">
+                      Worakij.W@gmail.com
+                    </a>
                   </div>
                 </motion.div>
 
@@ -214,132 +155,9 @@ const Contact = () => {
                   </div>
                 </motion.div>
 
-                {/* API Method Toggle (for development/testing) */}
-                {/* <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">API Method:</span>
-                    <button
-                      type="button"
-                      onClick={() => setUseOAuth2(!useOAuth2)}
-                      className={`px-3 py-1 text-xs rounded-full transition-colors ${
-                        useOAuth2
-                          ? 'bg-black dark:bg-white text-white dark:text-black'
-                          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                      }`}
-                    >
-                      OAuth2
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setUseOAuth2(!useOAuth2)}
-                      className={`px-3 py-1 text-xs rounded-full transition-colors ${
-                        !useOAuth2
-                          ? 'bg-black dark:bg-white text-white dark:text-black'
-                          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                      }`}
-                    >
-                      App Password
-                    </button>
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    {useOAuth2 ? 'Using OAuth2 (more secure)' : 'Using App Password (simpler setup)'}
-                  </p>
-                </div> */}
               </div>
             </motion.div>
 
-            {/* <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <div className="glass-card rounded-3xl p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                {submitStatus.type && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`p-4 rounded-md ${
-                      submitStatus.type === 'success'
-                        ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200'
-                        : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200'
-                    }`}
-                  >
-                    {submitStatus.message}
-                  </motion.div>
-                )}
-
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 glass-card rounded-xl border border-blue-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 glass-card rounded-xl border border-blue-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    disabled={isSubmitting}
-                    rows={4}
-                    className="w-full px-4 py-3 glass-card rounded-xl border border-blue-500/30 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all resize-none"
-                    placeholder="Tell me about your project..."
-                    required
-                  />
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02, y: -2 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full glass-card rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 font-semibold hover:from-pink-600 hover:to-purple-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl glow-pink"
-                >
-                  {isSubmitting ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Sending...</span>
-                    </div>
-                  ) : (
-                    'Send Message'
-                  )}
-                </motion.button>
-                </form>
-              </div>
-            </motion.div> */}
           </div>
         </motion.div>
       </div>
