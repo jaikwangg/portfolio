@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
-import Providers from "../components/Providers";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import PageTransition from "@/components/motion/PageTransition";
 import CustomCursor from "@/components/motion/CustomCursor";
@@ -39,17 +38,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <body className="bg-ink font-sans text-paper antialiased">
-        <Providers>
-          <SmoothScroll>
-            <SkipLink />
-            <PageTransition>
-              <div className="min-h-screen">
-                {children}
-              </div>
-            </PageTransition>
-            <CustomCursor />
-          </SmoothScroll>
-        </Providers>
+        <SmoothScroll>
+          <SkipLink />
+          <PageTransition>
+            <div className="min-h-screen">
+              {children}
+            </div>
+          </PageTransition>
+          <CustomCursor />
+        </SmoothScroll>
       </body>
     </html>
   );
