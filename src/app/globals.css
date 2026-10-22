@@ -167,6 +167,21 @@ body {
   align-items: center;
 }
 
+/* Home projects rail (gallery variant): the card image sits under this scrim.
+   Dark at the top (index + category), lighter through the middle so the image
+   shows, dark again under the title, description and tags. Checked against the
+   real card pixels: body/category >= 4.5:1, index >= 3:1 on every card. */
+.rail-scrim {
+  background: linear-gradient(
+    to bottom,
+    rgb(14 14 12 / 0.92) 0%,
+    rgb(14 14 12 / 0.55) 28%,
+    rgb(14 14 12 / 0.55) 45%,
+    rgb(14 14 12 / 0.9) 68%,
+    var(--color-ink) 100%
+  );
+}
+
 /* Custom cursor (only mounted for fine pointers without reduced motion). */
 html.has-custom-cursor,
 html.has-custom-cursor *:not(input, textarea, select, [contenteditable="true"]) {
