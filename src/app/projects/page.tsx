@@ -9,7 +9,7 @@ export default function ProjectsPage() {
   return (
     <>
       <Navigation />
-      <main className="overflow-x-clip">
+      <main id="main-content" tabIndex={-1} className="overflow-x-clip">
         <Projects variant="index" />
         <Contact />
       </main>

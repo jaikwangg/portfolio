@@ -10,7 +10,12 @@ const links = [
   { label: "Instagram", value: "@Worajai_", href: "https://instagram.com/Worajai_", external: true },
 ];
 
-const Contact = () => {
+interface ContactProps {
+  /** h1 on /contact (the page's only top-level heading), h2 wherever it closes another page. */
+  titleAs?: "h1" | "h2";
+}
+
+const Contact = ({ titleAs: Title = "h2" }: ContactProps) => {
   const year = new Date().getFullYear();
 
   return (
@@ -21,10 +26,10 @@ const Contact = () => {
           Get in touch
         </p>
 
-        <h2 id="contact-title" className="font-display text-display-xl uppercase text-paper">
+        <Title id="contact-title" className="font-display text-display-xl uppercase text-paper">
           <SplitReveal text="Let's work" split="chars" stagger={0.03} className="block" />
           <SplitReveal text="together" split="chars" stagger={0.03} delay={0.15} className="block text-accent" />
-        </h2>
+        </Title>
 
         <div className="mt-12 flex flex-col gap-12 md:mt-16 lg:flex-row lg:items-center lg:justify-between">
           <p className="max-w-md text-base leading-7 text-mute md:text-lg md:leading-8">

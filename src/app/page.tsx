@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main className="overflow-x-clip">
+      <main id="main-content" tabIndex={-1} className="overflow-x-clip">
         <Hero />
         <Projects />
         <About />

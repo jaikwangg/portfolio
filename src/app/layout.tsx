@@ -6,6 +6,7 @@ import Providers from "../components/Providers";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import PageTransition from "@/components/motion/PageTransition";
 import CustomCursor from "@/components/motion/CustomCursor";
+import SkipLink from "@/components/SkipLink";
 
 const display = Anton({
   weight: "400",
@@ -38,13 +39,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <body className="bg-ink font-sans text-paper antialiased">
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
         <Providers>
           <SmoothScroll>
+            <SkipLink />
             <PageTransition>
-              <div id="main-content" className="min-h-screen">
+              <div className="min-h-screen">
                 {children}
               </div>
             </PageTransition>

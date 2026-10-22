@@ -34,6 +34,7 @@ const Navigation = () => {
   const isHome = pathname === "/";
   const lenis = useLenis();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -56,6 +57,14 @@ const Navigation = () => {
 
   const close = useCallback(() => setOpen(false), []);
 
+  // Header backdrop appears once the page has scrolled (Lenis drives native scroll).
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // Play / reverse, lock scroll, manage focus.
   useEffect(() => {
     const tl = tlRef.current;
@@ -73,6 +82,8 @@ const Navigation = () => {
       else tl.play();
       requestAnimationFrame(() => overlay.querySelector<HTMLElement>("a[href]")?.focus());
     } else if (tl.progress() > 0) {
+      // Focus returns to the menu button, or (below) moves to the chosen section.
+      buttonRef.current?.focus();
       const finish = () => {
         gsap.set(overlay, { autoAlpha: 0 });
         lenis?.start();
@@ -80,7 +91,12 @@ const Navigation = () => {
         const id = pendingScroll.current;
         pendingScroll.current = null;
         if (!id) return;
-        const target = id === "home" ? 0 : document.getElementById(id);
+        const section = document.getElementById(id);
+        if (section) {
+          if (!section.hasAttribute("tabindex")) section.setAttribute("tabindex", "-1");
+          section.focus({ preventScroll: true });
+        }
+        const target = id === "home" ? 0 : section;
         if (lenis && target !== null) lenis.scrollTo(target);
         else if (target === 0) window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
         else target?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
@@ -95,7 +111,6 @@ const Navigation = () => {
         });
         tl.timeScale(1.6).reverse();
       }
-      buttonRef.current?.focus();
     }
   }, [open, lenis]);
 
@@ -161,7 +176,7 @@ const Navigation = () => {
 
   return (
     <>
-      <header className="site-header fixed inset-x-0 top-0 z-[60]">
+      <header className="site-header fixed inset-x-0 top-0 z-[60]" data-scrolled={scrolled && !open ? "" : undefined}>
         <nav aria-label="Primary" className="flex items-center justify-between px-5 py-4 md:px-10 md:py-6">
           <MagneticButton strength={0.25}>
             <Link

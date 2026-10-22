@@ -42,7 +42,12 @@ const facts = [
   { label: "Working style", value: "Clean UI, solid UX, reliable delivery" },
 ];
 
-const About = () => {
+interface AboutProps {
+  /** h1 on /about (the page's only top-level heading), h2 inside the home page. */
+  titleAs?: "h1" | "h2";
+}
+
+const About = ({ titleAs: Title = "h2" }: AboutProps) => {
   const pinRef = useRef<HTMLDivElement>(null);
 
   // The statement lights up word by word as you scroll. Pinned on md+,
@@ -85,14 +90,14 @@ const About = () => {
           <span className="h-px w-10 bg-accent" aria-hidden="true" />
           About
         </p>
-        <h2 id="about-title" className="max-w-[16ch] font-display text-display-lg uppercase text-paper">
+        <Title id="about-title" className="max-w-[16ch] font-display text-display-lg uppercase text-paper">
           {words.map((w, i) => (
             <span key={i}>
               <span className={`about-word inline-block ${emphasis.has(w) ? "text-accent" : ""}`}>{w}</span>
               {i < words.length - 1 ? " " : null}
             </span>
           ))}
-        </h2>
+        </Title>
         <p className="about-sub mt-8 max-w-2xl text-base leading-7 text-mute md:mt-12 md:text-lg md:leading-8">
           My work sits between product thinking, interface design, and engineering. I enjoy turning
           ideas into experiences that look intentional, feel smooth, and hold up in real use.

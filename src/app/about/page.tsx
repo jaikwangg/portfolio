@@ -9,8 +9,8 @@ export default function AboutPage() {
   return (
     <>
       <Navigation />
-      <main className="overflow-x-clip pt-16 md:pt-20">
-        <About />
+      <main id="main-content" tabIndex={-1} className="overflow-x-clip pt-16 md:pt-20">
+        <About titleAs="h1" />
         <Contact />
       </main>
     </>

@@ -8,8 +8,8 @@ export default function ContactPage() {
   return (
     <>
       <Navigation />
-      <main className="overflow-x-clip pt-16 md:pt-20">
-        <Contact />
+      <main id="main-content" tabIndex={-1} className="overflow-x-clip pt-16 md:pt-20">
+        <Contact titleAs="h1" />
       </main>
     </>
   );

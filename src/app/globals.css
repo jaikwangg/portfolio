@@ -104,6 +104,33 @@ body {
   transform: none;
 }
 
+/* Programmatic focus targets (<main> after the skip link or a route change,
+   a home section chosen from the menu) do not need a ring. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Fixed header: once the page has scrolled, a soft ink fade (and a light blur)
+   sits behind the logo and menu button so display type passing underneath
+   does not collide with "JK.". Fades out towards the bottom edge. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(14 14 12 / 0.82) 0%, rgb(14 14 12 / 0.6) 55%, rgb(14 14 12 / 0) 100%);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out-expo);
+}
+.site-header[data-scrolled]::before {
+  opacity: 1;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
