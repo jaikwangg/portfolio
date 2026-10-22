@@ -52,13 +52,6 @@
 /* --------------------------------------------------------------- base */
 :root {
   color-scheme: dark;
-  /* Kept for existing components that read these. */
-  --foreground-rgb: 242, 239, 230;
-  --background-rgb: 14, 14, 12;
-  --surface-rgb: 23, 23, 20;
-  --border-rgb: 36, 36, 31;
-  --accent-blue: #60a5fa;
-  --accent-sky: #38bdf8;
 }
 
 html {
@@ -309,70 +302,5 @@ html.has-custom-cursor *:not(input, textarea, select, [contenteditable="true"]) 
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;
     scroll-behavior: auto !important;
-  }
-}
-
-/* ------------------------------------------------------------------
-   Legacy utilities used by the current Hero/Projects/About/Contact.
-   Re-tinted to the new palette; remove once phase B replaces them.
-   --------------------------------------------------------------- */
-.glass,
-.glass-card {
-  background: rgb(23 23 20 / 0.72);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid var(--color-line);
-  box-shadow: 0 20px 52px -34px rgb(0 0 0 / 0.7);
-}
-
-.glow-blue,
-.glow-sky {
-  box-shadow: 0 0 0 1px rgb(255 90 31 / 0.08), 0 20px 60px -32px rgb(255 90 31 / 0.35);
-}
-
-.neon-blue,
-.neon-sky {
-  text-shadow: 0 10px 24px rgb(255 90 31 / 0.2);
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-16px);
-  }
-}
-
-@keyframes float-slow {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-12px) rotate(4deg);
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-slow {
-  animation: float-slow 8s ease-in-out infinite;
-}
-
-@layer utilities {
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-  .text-neon-blue,
-  .text-neon-sky,
-  .text-accent-blue {
-    color: var(--color-accent);
   }
 }
